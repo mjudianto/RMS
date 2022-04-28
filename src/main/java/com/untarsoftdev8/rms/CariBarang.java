@@ -157,7 +157,7 @@ public class CariBarang extends javax.swing.JFrame {
     private void buttonPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPenjualanActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new Penjualan().setVisible(true);
+        new Supplier().setVisible(true);
     }//GEN-LAST:event_buttonPenjualanActionPerformed
 
     private void buttonStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStokActionPerformed
@@ -167,7 +167,7 @@ public class CariBarang extends javax.swing.JFrame {
 
     private void buttonSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupplierActionPerformed
         this.setVisible(false);
-        new Supplier().setVisible(true);
+        new Penjualan().setVisible(true);
     }//GEN-LAST:event_buttonSupplierActionPerformed
 
     private void buttonCariBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariBarangActionPerformed
