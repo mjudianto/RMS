@@ -5,6 +5,7 @@
 package com.untarsoftdev8.rms;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -315,7 +316,22 @@ public class Penjualan extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         String buttonName[] = {"Hapus", "Detail"};
-        JOptionPane.showOptionDialog(null,"PILIH HAPUS ATAU DETAIL??","KONFIRMASI",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, buttonName, buttonName[0]);
+        int opsi = JOptionPane.showOptionDialog(null,"PILIH HAPUS ATAU DETAIL??","KONFIRMASI",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, buttonName, buttonName[0]);
+        
+        if (opsi == JOptionPane.YES_OPTION){
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            try{
+                int SelectedRowIndex = jTable1.getSelectedRow();
+                model.removeRow(SelectedRowIndex);
+                JOptionPane.showMessageDialog(null,"Berhasil dihapus");
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null,"Error");
+            }
+        }
+        else{
+            DetailPenjualan detailPenjualan = new DetailPenjualan();
+            detailPenjualan.setVisible(true);
+        }
     }//GEN-LAST:event_jTable1MouseClicked
 
     /**
