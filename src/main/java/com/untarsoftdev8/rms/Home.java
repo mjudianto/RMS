@@ -47,6 +47,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel1.setPreferredSize(new java.awt.Dimension(200, 550));
 
         buttonHome.setText("Home");
         buttonHome.addActionListener(new java.awt.event.ActionListener() {

@@ -43,14 +43,14 @@ public class Penjualan extends javax.swing.JFrame {
         jTextPane2 = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         buttonHome = new javax.swing.JButton();
         buttonKasir = new javax.swing.JButton();
         buttonPenjualan = new javax.swing.JButton();
         buttonStok = new javax.swing.JButton();
         buttonSupplier = new javax.swing.JButton();
         buttonCariBarang = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -172,48 +172,6 @@ public class Penjualan extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel1.setPreferredSize(new java.awt.Dimension(200, 550));
 
-        buttonHome.setText("Home");
-        buttonHome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonHomeActionPerformed(evt);
-            }
-        });
-
-        buttonKasir.setText("Kasir");
-        buttonKasir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonKasirActionPerformed(evt);
-            }
-        });
-
-        buttonPenjualan.setText("Penjualan");
-        buttonPenjualan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonPenjualanActionPerformed(evt);
-            }
-        });
-
-        buttonStok.setText("Stok");
-        buttonStok.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonStokActionPerformed(evt);
-            }
-        });
-
-        buttonSupplier.setText("Supplier");
-        buttonSupplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSupplierActionPerformed(evt);
-            }
-        });
-
-        buttonCariBarang.setText("Cari Barang Penjualan");
-        buttonCariBarang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCariBarangActionPerformed(evt);
-            }
-        });
-
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -222,25 +180,83 @@ public class Penjualan extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Retail Management System");
 
+        buttonHome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonHome.setText("Home");
+        buttonHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHomeActionPerformed(evt);
+            }
+        });
+
+        buttonKasir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonKasir.setText("Kasir");
+        buttonKasir.setVerifyInputWhenFocusTarget(false);
+        buttonKasir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonKasirActionPerformed(evt);
+            }
+        });
+
+        buttonPenjualan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonPenjualan.setText("Penjualan");
+        buttonPenjualan.setPreferredSize(new java.awt.Dimension(72, 21));
+        buttonPenjualan.setVerifyInputWhenFocusTarget(false);
+        buttonPenjualan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPenjualanActionPerformed(evt);
+            }
+        });
+
+        buttonStok.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonStok.setText("Stok");
+        buttonStok.setPreferredSize(new java.awt.Dimension(72, 21));
+        buttonStok.setVerifyInputWhenFocusTarget(false);
+        buttonStok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonStokActionPerformed(evt);
+            }
+        });
+
+        buttonSupplier.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonSupplier.setText("Supplier");
+        buttonSupplier.setPreferredSize(new java.awt.Dimension(72, 21));
+        buttonSupplier.setVerifyInputWhenFocusTarget(false);
+        buttonSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSupplierActionPerformed(evt);
+            }
+        });
+
+        buttonCariBarang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonCariBarang.setText("Cari Barang Penjualan");
+        buttonCariBarang.setPreferredSize(new java.awt.Dimension(72, 21));
+        buttonCariBarang.setVerifyInputWhenFocusTarget(false);
+        buttonCariBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCariBarangActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(buttonHome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonStok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonKasir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonPenjualan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonSupplier, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonCariBarang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))
+                        .addGap(41, 41, 41))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(21, 21, 21))))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(buttonHome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addComponent(buttonKasir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addComponent(buttonPenjualan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addComponent(buttonStok, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addComponent(buttonSupplier, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addComponent(buttonCariBarang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,19 +265,22 @@ public class Penjualan extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addGap(56, 56, 56)
-                .addComponent(buttonHome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonKasir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonPenjualan, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonStok, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonCariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(111, 111, 111)
+                    .addComponent(buttonHome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(31, 31, 31)
+                    .addComponent(buttonKasir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(27, 27, 27)
+                    .addComponent(buttonPenjualan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(27, 27, 27)
+                    .addComponent(buttonStok, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(29, 29, 29)
+                    .addComponent(buttonSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(29, 29, 29)
+                    .addComponent(buttonCariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(112, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -281,6 +300,27 @@ public class Penjualan extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        String buttonName[] = {"Hapus", "Detail"};
+        int opsi = JOptionPane.showOptionDialog(null,"PILIH HAPUS ATAU DETAIL??","KONFIRMASI",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, buttonName, buttonName[0]);
+        
+        if (opsi == JOptionPane.YES_OPTION){
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            try{
+                int SelectedRowIndex = jTable1.getSelectedRow();
+                model.removeRow(SelectedRowIndex);
+                JOptionPane.showMessageDialog(null,"Berhasil dihapus");
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null,"Error");
+            }
+        }
+        else{
+            DetailPenjualan detailPenjualan = new DetailPenjualan();
+            detailPenjualan.setVisible(true);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
         this.setVisible(false);
@@ -312,27 +352,6 @@ public class Penjualan extends javax.swing.JFrame {
         this.setVisible(false);
         new CariBarang().setVisible(true);
     }//GEN-LAST:event_buttonCariBarangActionPerformed
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
-        String buttonName[] = {"Hapus", "Detail"};
-        int opsi = JOptionPane.showOptionDialog(null,"PILIH HAPUS ATAU DETAIL??","KONFIRMASI",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, buttonName, buttonName[0]);
-        
-        if (opsi == JOptionPane.YES_OPTION){
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            try{
-                int SelectedRowIndex = jTable1.getSelectedRow();
-                model.removeRow(SelectedRowIndex);
-                JOptionPane.showMessageDialog(null,"Berhasil dihapus");
-            }catch(Exception ex){
-                JOptionPane.showMessageDialog(null,"Error");
-            }
-        }
-        else{
-            DetailPenjualan detailPenjualan = new DetailPenjualan();
-            detailPenjualan.setVisible(true);
-        }
-    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
