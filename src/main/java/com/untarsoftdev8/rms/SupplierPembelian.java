@@ -232,15 +232,20 @@ public class SupplierPembelian extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
+    private void buttonCariBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariBarangActionPerformed
         this.setVisible(false);
-        new Home().setVisible(true);
-    }//GEN-LAST:event_buttonHomeActionPerformed
+        new CariBarang().setVisible(true);
+    }//GEN-LAST:event_buttonCariBarangActionPerformed
 
-    private void buttonKasirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKasirActionPerformed
+    private void buttonSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupplierActionPerformed
         this.setVisible(false);
-        new Kasir().setVisible(true);
-    }//GEN-LAST:event_buttonKasirActionPerformed
+        new Supplier().setVisible(true);
+    }//GEN-LAST:event_buttonSupplierActionPerformed
+
+    private void buttonStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStokActionPerformed
+        this.setVisible(false);
+        new Stok().setVisible(true);
+    }//GEN-LAST:event_buttonStokActionPerformed
 
     private void buttonPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPenjualanActionPerformed
         // TODO add your handling code here:
@@ -248,20 +253,15 @@ public class SupplierPembelian extends javax.swing.JFrame {
         new Penjualan().setVisible(true);
     }//GEN-LAST:event_buttonPenjualanActionPerformed
 
-    private void buttonStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStokActionPerformed
+    private void buttonKasirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKasirActionPerformed
         this.setVisible(false);
-        new Stok().setVisible(true);
-    }//GEN-LAST:event_buttonStokActionPerformed
+        new Kasir().setVisible(true);
+    }//GEN-LAST:event_buttonKasirActionPerformed
 
-    private void buttonSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupplierActionPerformed
+    private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
         this.setVisible(false);
-        new Supplier().setVisible(true);
-    }//GEN-LAST:event_buttonSupplierActionPerformed
-
-    private void buttonCariBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariBarangActionPerformed
-        this.setVisible(false);
-        new CariBarang().setVisible(true);
-    }//GEN-LAST:event_buttonCariBarangActionPerformed
+        new Home().setVisible(true);
+    }//GEN-LAST:event_buttonHomeActionPerformed
 
     /**
      * @param args the command line arguments
