@@ -9,7 +9,14 @@ package com.untarsoftdev8.rms;
  * @author Jmslord
  */
 public class Stok extends javax.swing.JFrame {
-
+    String id_barang;
+    String nama;
+    String tipe;
+    String merek;
+    String bos;
+    int jumlahstok;
+    double harga;
+    
     /**
      * Creates new form Stok
      */

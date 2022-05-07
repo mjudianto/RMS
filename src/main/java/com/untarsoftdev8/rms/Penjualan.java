@@ -6,13 +6,19 @@ package com.untarsoftdev8.rms;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 /**
  *
  * @author Jmslord
  */
 public class Penjualan extends javax.swing.JFrame {
-
+    String Tanggal;
+    private DefaultTableModel model;
     /**
      * Creates new form Supplier
      */
