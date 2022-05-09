@@ -3,16 +3,60 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.untarsoftdev8.rms;
+
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Jmslord
  */
 public class Supplier extends javax.swing.JFrame {
-     /**
-     * Creates new form Penjualan
-     */
+    String id_bos;
+    String nama_bos;
+    String no_telp;
+     Koneksi koneksi = new Koneksi();
+    
+    private DefaultTableModel model;
+    
+    public void loadData(){
+        model.getDataVector().removeAllElements();
+        
+        model.fireTableDataChanged();
+        
+        try {
+            Connection c = koneksi.getKoneksi();
+            Statement s = c.createStatement();
+            
+            String sql = "SELECT * FROM supplier";
+            ResultSet r = s.executeQuery(sql);
+            
+            while (r.next()) {
+                Object[] o = new Object[7];
+                o [0] = r.getString("id_bos");
+                o [1] = r.getString("nama_bos");
+                o [2] = r.getString("no_telp");
+                
+                model.addRow(o);
+            }
+            r.close();
+            s.close();
+        } catch (Exception e) {
+            System.out.println("terjadi kesalahan");
+        }
+    }
+    
     public Supplier() {
         initComponents();
+        model = new DefaultTableModel();
+        
+        supplierTable.setModel(model);
+        
+        model.addColumn("id_bos");
+        model.addColumn("nama_bos");
+        model.addColumn("no_telp");
+        
+        loadData();
     }
 
     /**
