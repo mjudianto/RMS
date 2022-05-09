@@ -356,7 +356,7 @@ public class Penjualan extends javax.swing.JFrame {
 
     private void buttonCariBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariBarangActionPerformed
         this.setVisible(false);
-        new CariBarang().setVisible(true);
+        new CariBarangPenjualan().setVisible(true);
     }//GEN-LAST:event_buttonCariBarangActionPerformed
 
     /**
