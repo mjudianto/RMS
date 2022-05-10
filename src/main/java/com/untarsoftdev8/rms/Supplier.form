@@ -80,7 +80,7 @@
                   </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jButton2" max="32767" attributes="0"/>
+                      <Component id="btnEdit" max="32767" attributes="0"/>
                       <Component id="btnInput" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -108,7 +108,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtNama" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnHapus" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -162,7 +162,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInputActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="btnEdit">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -170,7 +170,7 @@
             <Property name="text" type="java.lang.String" value="EDIT"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtID">
@@ -266,6 +266,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="supplierTableMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

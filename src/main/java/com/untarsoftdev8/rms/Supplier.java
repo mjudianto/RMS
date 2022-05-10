@@ -80,7 +80,7 @@ public class Supplier extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btnInput = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         txtID = new javax.swing.JTextField();
         txtNoTelp = new javax.swing.JTextField();
         txtNama = new javax.swing.JTextField();
@@ -121,11 +121,11 @@ public class Supplier extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(153, 153, 153));
-        jButton2.setText("EDIT");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setBackground(new java.awt.Color(153, 153, 153));
+        btnEdit.setText("EDIT");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
@@ -174,6 +174,11 @@ public class Supplier extends javax.swing.JFrame {
         });
         supplierTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         supplierTable.setRowHeight(25);
+        supplierTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                supplierTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(supplierTable);
 
         btnHapus.setBackground(new java.awt.Color(153, 153, 153));
@@ -207,7 +212,7 @@ public class Supplier extends javax.swing.JFrame {
                         .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(162, 162, 162)
@@ -230,7 +235,7 @@ public class Supplier extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jButton2)
+                    .addComponent(btnEdit)
                     .addComponent(btnHapus))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -414,9 +419,33 @@ public class Supplier extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNamaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        int i = supplierTable.getSelectedRow();
+        if (i == -1) {
+            return;
+        }
+        String id = (String) model.getValueAt(i, 0);
+        String tempnama_bos = txtNama.getText();
+        String tempnotelp = txtNoTelp.getText();
+        
+        try {
+            Connection c = koneksi.getKoneksi();
+            String sql = "UPDATE supplier SET nama_bos = ?, no_telp = ? WHERE id_bos = ?";
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setString(1, tempnama_bos);
+            p.setString(2, tempnotelp);
+            p.setString(3, id);
+            
+            p.executeUpdate();
+            p.close();
+            JOptionPane.showMessageDialog(null, "Data Terubah");
+            clear();
+        } catch (Exception e) {
+            System.out.println("update error");
+        }finally{
+            loadData();
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
         this.setVisible(false);
@@ -479,6 +508,22 @@ public class Supplier extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnHapusActionPerformed
 
+    private void supplierTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierTableMouseClicked
+        int i = supplierTable.getSelectedRow();
+        if (i == -1) {
+            return;
+        }
+        
+        String tempid = (String) model.getValueAt(i, 0);
+        String tempnama_bos = (String) model.getValueAt(i, 1);
+        String tempno_telp = (String) model.getValueAt(i, 2);
+        
+        
+        txtID.setText(tempid);
+        txtNama.setText(tempnama_bos);
+        txtNoTelp.setText(tempno_telp);
+    }//GEN-LAST:event_supplierTableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -516,6 +561,7 @@ public class Supplier extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnInput;
     private javax.swing.JButton buttonCariBarang;
@@ -524,7 +570,6 @@ public class Supplier extends javax.swing.JFrame {
     private javax.swing.JButton buttonPenjualan;
     private javax.swing.JButton buttonStok;
     private javax.swing.JButton buttonSupplier;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
