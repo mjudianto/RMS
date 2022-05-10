@@ -5,6 +5,7 @@
 package com.untarsoftdev8.rms;
 
 import java.sql.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,7 +16,7 @@ public class Supplier extends javax.swing.JFrame {
     String id_bos;
     String nama_bos;
     String no_telp;
-     Koneksi koneksi = new Koneksi();
+    Koneksi koneksi = new Koneksi();
     
     private DefaultTableModel model;
     
@@ -45,6 +46,11 @@ public class Supplier extends javax.swing.JFrame {
             System.out.println("terjadi kesalahan");
         }
     }
+    public void clear(){
+        txtID.setText("");
+        txtNama.setText("");
+        txtNoTelp.setText("");
+    }
     
     public Supplier() {
         initComponents();
@@ -73,13 +79,14 @@ public class Supplier extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        btnInput = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        txtID = new javax.swing.JTextField();
+        txtNoTelp = new javax.swing.JTextField();
+        txtNama = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         supplierTable = new javax.swing.JTable();
+        btnHapus = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -106,37 +113,37 @@ public class Supplier extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("No Telepon");
 
-        jButton1.setBackground(new java.awt.Color(153, 153, 153));
-        jButton1.setText("INPUT");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnInput.setBackground(new java.awt.Color(153, 153, 153));
+        btnInput.setText("INPUT");
+        btnInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnInputActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(153, 153, 153));
-        jButton2.setText("EDIT");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setBackground(new java.awt.Color(153, 153, 153));
+        btnEdit.setText("EDIT");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtIDActionPerformed(evt);
             }
         });
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtNoTelp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtNoTelpActionPerformed(evt);
             }
         });
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtNama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtNamaActionPerformed(evt);
             }
         });
 
@@ -167,7 +174,20 @@ public class Supplier extends javax.swing.JFrame {
         });
         supplierTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         supplierTable.setRowHeight(25);
+        supplierTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                supplierTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(supplierTable);
+
+        btnHapus.setBackground(new java.awt.Color(153, 153, 153));
+        btnHapus.setText("HAPUS");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -181,17 +201,19 @@ public class Supplier extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48)
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                        .addComponent(jButton1))))
+                        .addComponent(txtNoTelp, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(217, 217, 217)
+                        .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(162, 162, 162)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -206,14 +228,15 @@ public class Supplier extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel9)
-                    .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnInput)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNoTelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jButton2))
+                    .addComponent(btnEdit)
+                    .addComponent(btnHapus))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -293,7 +316,7 @@ public class Supplier extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -316,7 +339,7 @@ public class Supplier extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
-                .addContainerGap(471, Short.MAX_VALUE))
+                .addContainerGap(463, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(111, 111, 111)
@@ -359,25 +382,70 @@ public class Supplier extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInputActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String id = txtID.getText();
+        String nama = txtNama.getText();
+        String no_telp = txtNoTelp.getText();
+        
+        try {
+            Connection c = koneksi.getKoneksi();
+            String sql = "INSERT INTO supplier VALUES (?, ?, ?);";
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setString(1, id);
+            p.setString(2, nama);
+            p.setString(3, no_telp);
+            
+            p.executeUpdate();
+            p.close();
+            JOptionPane.showMessageDialog(null, "Data Terubah");
+            clear();
+        } catch (Exception e) {
+            System.out.println("update error");
+        }finally{
+            loadData();
+        }
+    }//GEN-LAST:event_btnInputActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtIDActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtNoTelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoTelpActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtNoTelpActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtNamaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        int i = supplierTable.getSelectedRow();
+        if (i == -1) {
+            return;
+        }
+        String id = (String) model.getValueAt(i, 0);
+        String tempnama_bos = txtNama.getText();
+        String tempnotelp = txtNoTelp.getText();
+        
+        try {
+            Connection c = koneksi.getKoneksi();
+            String sql = "UPDATE supplier SET nama_bos = ?, no_telp = ? WHERE id_bos = ?";
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setString(1, tempnama_bos);
+            p.setString(2, tempnotelp);
+            p.setString(3, id);
+            
+            p.executeUpdate();
+            p.close();
+            JOptionPane.showMessageDialog(null, "Data Terubah");
+            clear();
+        } catch (Exception e) {
+            System.out.println("update error");
+        }finally{
+            loadData();
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
         this.setVisible(false);
@@ -409,6 +477,52 @@ public class Supplier extends javax.swing.JFrame {
         this.setVisible(false);
         new CariBarangPenjualan().setVisible(true);
     }//GEN-LAST:event_buttonCariBarangActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        int i = supplierTable.getSelectedRow();
+        if (i == -1) {
+            return;
+        }
+        
+        String id = (String) model.getValueAt(i, 0);
+        
+        int pernyataan = JOptionPane.showConfirmDialog(null, "Yakin Data Akan Dihapus","Konfirmasi", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (pernyataan== JOptionPane.OK_OPTION) {
+            try {
+                Connection c = koneksi.getKoneksi();
+                String sql = "DELETE FROM supplier WHERE id_bos = ?";
+                PreparedStatement p = c.prepareStatement(sql);
+                p.setString(1, id);
+                p.executeUpdate();
+                p.close();
+                JOptionPane.showMessageDialog(null, "Data Terhapus");
+            } catch (Exception e) {
+                System.out.println("Terjadi Kesalahan");
+            }finally{
+                loadData();
+                clear();
+            }
+        }
+        if (pernyataan== JOptionPane.CANCEL_OPTION) {
+            
+        }
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void supplierTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierTableMouseClicked
+        int i = supplierTable.getSelectedRow();
+        if (i == -1) {
+            return;
+        }
+        
+        String tempid = (String) model.getValueAt(i, 0);
+        String tempnama_bos = (String) model.getValueAt(i, 1);
+        String tempno_telp = (String) model.getValueAt(i, 2);
+        
+        
+        txtID.setText(tempid);
+        txtNama.setText(tempnama_bos);
+        txtNoTelp.setText(tempno_telp);
+    }//GEN-LAST:event_supplierTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -447,14 +561,15 @@ public class Supplier extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnInput;
     private javax.swing.JButton buttonCariBarang;
     private javax.swing.JButton buttonHome;
     private javax.swing.JButton buttonKasir;
     private javax.swing.JButton buttonPenjualan;
     private javax.swing.JButton buttonStok;
     private javax.swing.JButton buttonSupplier;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
@@ -464,9 +579,9 @@ public class Supplier extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable supplierTable;
+    private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtNama;
+    private javax.swing.JTextField txtNoTelp;
     // End of variables declaration//GEN-END:variables
 }
