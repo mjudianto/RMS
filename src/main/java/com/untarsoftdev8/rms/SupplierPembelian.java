@@ -33,8 +33,9 @@ public class SupplierPembelian extends javax.swing.JFrame {
         buttonKasir = new javax.swing.JButton();
         buttonPenjualan = new javax.swing.JButton();
         buttonStok = new javax.swing.JButton();
-        buttonSupplier = new javax.swing.JButton();
+        buttonPembelian = new javax.swing.JButton();
         buttonCariBarang = new javax.swing.JButton();
+        buttonSupplier = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -91,13 +92,13 @@ public class SupplierPembelian extends javax.swing.JFrame {
             }
         });
 
-        buttonSupplier.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        buttonSupplier.setText("Supplier");
-        buttonSupplier.setPreferredSize(new java.awt.Dimension(72, 21));
-        buttonSupplier.setVerifyInputWhenFocusTarget(false);
-        buttonSupplier.addActionListener(new java.awt.event.ActionListener() {
+        buttonPembelian.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonPembelian.setText("Pembelian");
+        buttonPembelian.setPreferredSize(new java.awt.Dimension(72, 21));
+        buttonPembelian.setVerifyInputWhenFocusTarget(false);
+        buttonPembelian.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSupplierActionPerformed(evt);
+                buttonPembelianActionPerformed(evt);
             }
         });
 
@@ -111,6 +112,16 @@ public class SupplierPembelian extends javax.swing.JFrame {
             }
         });
 
+        buttonSupplier.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonSupplier.setText("Supplier");
+        buttonSupplier.setPreferredSize(new java.awt.Dimension(72, 21));
+        buttonSupplier.setVerifyInputWhenFocusTarget(false);
+        buttonSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSupplierActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -118,17 +129,18 @@ public class SupplierPembelian extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jLabel1)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 30, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(22, 22, 22))
             .addComponent(buttonCariBarang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(buttonSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonPembelian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(buttonStok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(buttonPenjualan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(buttonKasir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(buttonHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,11 +157,13 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 .addComponent(buttonPenjualan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(buttonStok, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(28, 28, 28)
+                .addComponent(buttonPembelian, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(buttonCariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(60, 60, 60))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -222,7 +236,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 538, Short.MAX_VALUE)
@@ -237,10 +251,10 @@ public class SupplierPembelian extends javax.swing.JFrame {
         new CariBarangPenjualan().setVisible(true);
     }//GEN-LAST:event_buttonCariBarangActionPerformed
 
-    private void buttonSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupplierActionPerformed
+    private void buttonPembelianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPembelianActionPerformed
         this.setVisible(false);
-        new Supplier().setVisible(true);
-    }//GEN-LAST:event_buttonSupplierActionPerformed
+        new SupplierPembelian().setVisible(true);
+    }//GEN-LAST:event_buttonPembelianActionPerformed
 
     private void buttonStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStokActionPerformed
         this.setVisible(false);
@@ -262,6 +276,11 @@ public class SupplierPembelian extends javax.swing.JFrame {
         this.setVisible(false);
         new Home().setVisible(true);
     }//GEN-LAST:event_buttonHomeActionPerformed
+
+    private void buttonSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupplierActionPerformed
+        this.setVisible(false);
+        new Supplier().setVisible(true);
+    }//GEN-LAST:event_buttonSupplierActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,6 +324,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
     private javax.swing.JButton buttonCariBarang;
     private javax.swing.JButton buttonHome;
     private javax.swing.JButton buttonKasir;
+    private javax.swing.JButton buttonPembelian;
     private javax.swing.JButton buttonPenjualan;
     private javax.swing.JButton buttonStok;
     private javax.swing.JButton buttonSupplier;
