@@ -85,12 +85,30 @@ public class Koneksi {
             System.out.println(ex);
         }
     }
+    private static void createTablePembelian() {
+            
+            String sqlCreate = "CREATE TABLE IF NOT EXISTS pembelian "
+                    + "  (id_pembelian     VARCHAR(6) PRIMARY KEY,"
+                    + "   tanggal          DATE NOT NULL,"
+                    + "   total            DOUBLE NOT NULL,"
+                    + "   nama_supplier    DOUBLE NOT NULL)";
+            
+            Statement stmt;
+        try {
+            stmt = koneksi.createStatement();
+            stmt.execute(sqlCreate);
+            System.out.println("tabel pembelian Berhasil atau sudah ada");
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
     
     public static void main(String[] args) {
         getKoneksi();
         createTableSupplier();
         createTableStok();
         createTablePenjualan();
+        createTablePembelian();
     }
     
 }
