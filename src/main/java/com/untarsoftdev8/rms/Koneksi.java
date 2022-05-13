@@ -95,7 +95,7 @@ public class Koneksi {
                     + "  (id_pembelian     VARCHAR(6) PRIMARY KEY,"
                     + "   tanggal          DATE NOT NULL,"
                     + "   total            DOUBLE NOT NULL,"
-                    + "   nama_supplier    DOUBLE NOT NULL)";
+                    + "   nama_supplier    VARCHAR(20) NOT NULL)";
             
             Statement stmt;
         try {
