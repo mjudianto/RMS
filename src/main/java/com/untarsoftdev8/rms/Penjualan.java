@@ -4,28 +4,69 @@
  */
 package com.untarsoftdev8.rms;
 
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Jmslord
  */
 public class Penjualan extends javax.swing.JFrame {
+    DefaultTableModel model = new DefaultTableModel() ;
     String Tanggal;
-    private DefaultTableModel model;
+    Koneksi koneksi = new Koneksi();
+
     /**
      * Creates new form Supplier
      */
     public Penjualan() {
         initComponents();
+        model.addColumn("ID");
+        model.addColumn("Tanggal");
+        model.addColumn("Pemasukan");
+        model.addColumn("Keuntungan");
+        
+        DataPenjualan.setModel(model);
+        getData();
     }
 
+    public void getData( ){
+
+     model.getDataVector().removeAllElements();
+        
+        model.fireTableDataChanged();
+        
+        try {
+            Connection c = koneksi.getKoneksi();
+            Statement s = c.createStatement();
+            
+            String sql = "SELECT * FROM penjualan";
+            ResultSet r = s.executeQuery(sql);
+            
+            while (r.next()) {
+                Object[] o = new Object[7];
+                o [0] = r.getString("id_penjualan");
+                o [1] = r.getString("tanggal");
+                o [2] = r.getString("pemasukan");
+                o [3] = r.getString("keuntungan");
+                
+                model.addRow(o);
+            }
+            r.close();
+            s.close();
+        } catch (Exception e) {
+            System.out.println("terjadi kesalahan");
+        }
+}
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,12 +76,14 @@ public class Penjualan extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        txTanggal = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        DataPenjualan = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
@@ -58,11 +101,27 @@ public class Penjualan extends javax.swing.JFrame {
         buttonSupplier = new javax.swing.JButton();
         buttonCariBarang = new javax.swing.JButton();
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(800, 550));
+
+        txTanggal.setDateFormatString("dd/MM/yyyy");
+        txTanggal.setName("jDateChooser"); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Rockwell Extra Bold", 0, 12)); // NOI18N
         jLabel10.setText("Tanggal");
@@ -70,30 +129,31 @@ public class Penjualan extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         jLabel9.setText("Daftar Penjualan Setiap Hari");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        DataPenjualan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Integer(1), "24-05-2020",  new Long(10000000),  new Long(2000000)},
-                { new Integer(2), "24-05-2020",  new Long(10000000),  new Long(2000000)},
-                { new Integer(3), "24-05-2020",  new Long(10000000),  new Long(2000000)}
+                {null, "", null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Tanggal", "Pemasukan", "Keuangan"
+                "ID", "Tanggal", "Penjualan", "Keuntungan"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Long.class, java.lang.Long.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        DataPenjualan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                DataPenjualanMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(DataPenjualan);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Cari :");
@@ -110,6 +170,11 @@ public class Penjualan extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(153, 153, 153));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setText("Tambah");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -141,7 +206,7 @@ public class Penjualan extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
@@ -156,7 +221,7 @@ public class Penjualan extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel10)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -307,26 +372,10 @@ public class Penjualan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void DataPenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DataPenjualanMouseClicked
         // TODO add your handling code here:
-        String buttonName[] = {"Hapus", "Detail"};
-        int opsi = JOptionPane.showOptionDialog(null,"PILIH HAPUS ATAU DETAIL??","KONFIRMASI",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, buttonName, buttonName[0]);
-        
-        if (opsi == JOptionPane.YES_OPTION){
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            try{
-                int SelectedRowIndex = jTable1.getSelectedRow();
-                model.removeRow(SelectedRowIndex);
-                JOptionPane.showMessageDialog(null,"Berhasil dihapus");
-            }catch(Exception ex){
-                JOptionPane.showMessageDialog(null,"Error");
-            }
-        }
-        else{
-            DetailPenjualan detailPenjualan = new DetailPenjualan();
-            detailPenjualan.setVisible(true);
-        }
-    }//GEN-LAST:event_jTable1MouseClicked
+
+    }//GEN-LAST:event_DataPenjualanMouseClicked
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
         this.setVisible(false);
@@ -358,6 +407,29 @@ public class Penjualan extends javax.swing.JFrame {
         this.setVisible(false);
         new CariBarangPenjualan().setVisible(true);
     }//GEN-LAST:event_buttonCariBarangActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int id = 0 ;
+        int pemasukan = 0;
+        int keuntungan = 0;
+        String tampilan = "yyyy-MM-dd";
+        SimpleDateFormat fm = new SimpleDateFormat(tampilan);
+        String tanggal = String.valueOf(fm.format(txTanggal.getDate()));
+        try {
+            String sql = "INSERT INTO penjualan VALUES('" + id + "','" + tanggal + "','0','0')";
+            Connection conn = Koneksi.getKoneksi();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute(sql);
+            JOptionPane.showMessageDialog(null, "Simpan tanggal berhasil");
+            
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error" + e);
+        }finally{
+            getData();
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -398,6 +470,7 @@ public class Penjualan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable DataPenjualan;
     private javax.swing.JButton buttonCariBarang;
     private javax.swing.JButton buttonHome;
     private javax.swing.JButton buttonKasir;
@@ -405,7 +478,6 @@ public class Penjualan extends javax.swing.JFrame {
     private javax.swing.JButton buttonStok;
     private javax.swing.JButton buttonSupplier;
     private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -417,8 +489,10 @@ public class Penjualan extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
+    private com.toedter.calendar.JDateChooser txTanggal;
     // End of variables declaration//GEN-END:variables
 }
