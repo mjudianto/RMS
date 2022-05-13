@@ -6,11 +6,11 @@ package com.untarsoftdev8.rms;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-<<<<<<< HEAD
+
 import javax.swing.JOptionPane;
-=======
+
 import java.sql.Statement;
->>>>>>> origin/master
+
 
 /**
  *

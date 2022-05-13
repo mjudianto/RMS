@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import static javax.management.Query.gt;
 
 /**
  *
@@ -66,6 +67,7 @@ public class Penjualan extends javax.swing.JFrame {
             System.out.println("terjadi kesalahan");
         }
 }
+ 
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -374,8 +376,36 @@ public class Penjualan extends javax.swing.JFrame {
 
     private void DataPenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DataPenjualanMouseClicked
         // TODO add your handling code here:
-
-
+        int baris = DataPenjualan.getSelectedRow();
+        String pilihan[] = {"HAPUS", "DETAIL"};
+        if (baris != -1){
+             int pilih = JOptionPane.showOptionDialog(null, "PILIH HAPUS ATAU DETAIL?", "KONFIRMASI", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, pilihan, pilihan[0]);
+             switch (pilih) {
+                case JOptionPane.YES_OPTION://Hapus
+                String pilihan1[] = {"HAPUS", "BATAL"};
+                int pilih1 = JOptionPane.showOptionDialog(null, "HAPUS INI?", "KONFIRMASI", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, pilihan1, pilihan1[0]);
+                if (pilih1 == JOptionPane.YES_OPTION) {
+                    String idJual = DataPenjualan.getValueAt(baris, 0).toString();
+                    try {
+                Connection c = koneksi.getKoneksi();
+                String sql = "DELETE FROM penjualan WHERE id_penjualan = ?";
+                PreparedStatement p = c.prepareStatement(sql);
+                p.setString(1, idJual);
+                p.executeUpdate();
+                p.close();
+                JOptionPane.showMessageDialog(null, "Data Terhapus");
+            } catch (Exception e) {
+                System.out.println("Terjadi Kesalahan");
+            }finally{
+                getData();
+            }
+                }
+                case JOptionPane.NO_OPTION://detail
+                break;
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"ERROR");
+        }
     }//GEN-LAST:event_DataPenjualanMouseClicked
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
@@ -412,8 +442,6 @@ public class Penjualan extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         int id = 0 ;
-        int pemasukan = 0;
-        int keuntungan = 0;
         String tampilan = "yyyy-MM-dd";
         SimpleDateFormat fm = new SimpleDateFormat(tampilan);
         String tanggal = String.valueOf(fm.format(txTanggal.getDate()));
@@ -429,6 +457,7 @@ public class Penjualan extends javax.swing.JFrame {
         }finally{
             getData();
         }
+ 
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
