@@ -375,6 +375,7 @@ public class Penjualan extends javax.swing.JFrame {
     private void DataPenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DataPenjualanMouseClicked
         // TODO add your handling code here:
 
+
     }//GEN-LAST:event_DataPenjualanMouseClicked
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
@@ -417,7 +418,7 @@ public class Penjualan extends javax.swing.JFrame {
         SimpleDateFormat fm = new SimpleDateFormat(tampilan);
         String tanggal = String.valueOf(fm.format(txTanggal.getDate()));
         try {
-            String sql = "INSERT INTO penjualan VALUES('" + id + "','" + tanggal + "','0','0')";
+            String sql = "INSERT INTO penjualan VALUES('"+id+"','" + tanggal + "','0','0')";
             Connection conn = Koneksi.getKoneksi();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute(sql);
