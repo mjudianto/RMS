@@ -7,7 +7,10 @@ package com.untarsoftdev8.rms;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,6 +30,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
         model.addColumn("id_pembelian");
         model.addColumn("tanggal");
         model.addColumn("total");
+        model.addColumn("lunas");
         model.addColumn("nama_supplier");
         
         loadData();
@@ -47,11 +51,12 @@ public class SupplierPembelian extends javax.swing.JFrame {
             ResultSet r = s.executeQuery(sql);
             
             while (r.next()) {
-                Object[] o = new Object[4];
+                Object[] o = new Object[5];
                 o [0] = r.getString("id_pembelian");
-                o [1] = r.getString("tanggal");
-                o [2] = r.getString("total");
-                o [3] = r.getString("nama_supplier");
+                o [1] = r.getDate("tanggal");
+                o [2] = r.getDouble("total");
+                o [3] = r.getString("lunas");
+                o [4] = r.getString("nama_supplier");
                 
                 model.addRow(o);
             }
@@ -61,10 +66,52 @@ public class SupplierPembelian extends javax.swing.JFrame {
             System.out.println("terjadi kesalahan");
         }
     }
+    
+    public void clear(){
+        txtID.setText("");
+        txtTanggal.setDate(null);
+        txtTotal.setText("");
+        pilBos.setSelectedItem(-1);
+    }
+    
+    public DefaultComboBoxModel retrieve()
+    {
+        DefaultComboBoxModel dm=new DefaultComboBoxModel();
+
+        //SQL
+        String sql="SELECT nama_bos FROM supplier";
+
+        try
+        {
+            Connection c=koneksi.getKoneksi();
+
+            //STATEMENT
+            Statement s=c.prepareStatement(sql);
+            ResultSet rs=s.executeQuery(sql);
+
+            //LOOP THRU GETTING ALL VALUES
+            while(rs.next())
+            {
+                //GET VALUES
+                String name=rs.getString(1);
+
+                dm.addElement(name);
+            }
+
+            return dm;
+
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+             return null;
+        }
+
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGrupLunas = new javax.swing.ButtonGroup();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -73,6 +120,18 @@ public class SupplierPembelian extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        btnInput = new javax.swing.JButton();
+        txtID = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        btnY = new javax.swing.JRadioButton();
+        btnN = new javax.swing.JRadioButton();
+        pilBos = new javax.swing.JComboBox<>();
+        txtTanggal = new com.toedter.calendar.JDateChooser();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -94,24 +153,24 @@ public class SupplierPembelian extends javax.swing.JFrame {
 
         pembelianTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Integer(1), "24/04/22",  new Integer(1500000), "MGPS"},
-                { new Integer(2), "25/04/22",  new Integer(1500000), "Cahaya Teknik"},
-                { new Integer(3), "26/04/22",  new Integer(1500000), "Maju Jaya"},
-                { new Integer(4), "27/04/22",  new Integer(1500000), "Maju Jaya"},
-                { new Integer(5), "28/04/22",  new Integer(1500000), "Maju Jaya"},
-                { new Integer(6), "29/04/22",  new Integer(1500000), "Maju Jaya"},
-                { new Integer(7), "30/04/22",  new Integer(1500000), "Maju Jaya"},
-                { new Integer(8), "01/05/22",  new Integer(1500000), "Maju Jaya"},
-                { new Integer(9), "02/05/22",  new Integer(1500000), "Maju Jaya"},
-                { new Integer(10), "03/05/22",  new Integer(1500000), "Maju Jaya"},
-                { new Integer(11), "04/05/22",  new Integer(1500000), null}
+                { new Integer(1), "24/04/22",  new Integer(1500000), null, "MGPS"},
+                { new Integer(2), "25/04/22",  new Integer(1500000), null, "Cahaya Teknik"},
+                { new Integer(3), "26/04/22",  new Integer(1500000), null, "Maju Jaya"},
+                { new Integer(4), "27/04/22",  new Integer(1500000), null, "Maju Jaya"},
+                { new Integer(5), "28/04/22",  new Integer(1500000), null, "Maju Jaya"},
+                { new Integer(6), "29/04/22",  new Integer(1500000), null, "Maju Jaya"},
+                { new Integer(7), "30/04/22",  new Integer(1500000), null, "Maju Jaya"},
+                { new Integer(8), "01/05/22",  new Integer(1500000), null, "Maju Jaya"},
+                { new Integer(9), "02/05/22",  new Integer(1500000), null, "Maju Jaya"},
+                { new Integer(10), "03/05/22",  new Integer(1500000), null, "Maju Jaya"},
+                { new Integer(11), "04/05/22",  new Integer(1500000), null, null}
             },
             new String [] {
-                "ID", "Tanggal", "Total", "Nama Supplier"
+                "ID", "Tanggal", "Total", "Lunas", "Nama Supplier"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -133,7 +192,49 @@ public class SupplierPembelian extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Total Utang");
 
-        jTextField2.setText("jTextField2");
+        jLabel5.setText("ID");
+
+        jLabel6.setText("Tanggal");
+
+        jLabel7.setText("Total");
+
+        btnInput.setBackground(new java.awt.Color(153, 153, 153));
+        btnInput.setText("INPUT");
+        btnInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInputActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Lunas");
+
+        jLabel9.setText("Nama Supplier");
+
+        btnGrupLunas.add(btnY);
+        btnY.setText("Y");
+        btnY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnYActionPerformed(evt);
+            }
+        });
+
+        btnGrupLunas.add(btnN);
+        btnN.setText("N");
+        btnN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNActionPerformed(evt);
+            }
+        });
+
+        pilBos.setModel(retrieve());
+        pilBos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pilBosActionPerformed(evt);
+            }
+        });
+
+        txtTanggal.setDateFormatString("dd/MM/yyyy");
+        txtTanggal.setName("jDateChooser"); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -156,21 +257,75 @@ public class SupplierPembelian extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(14, 14, 14))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7))
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(txtTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel9))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(57, 57, 57)
+                                        .addComponent(jLabel8)))
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGap(30, 30, 30)
+                                        .addComponent(btnY, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnN, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(pilBos, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnInput)
+                        .addGap(26, 26, 26))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(btnY)
+                        .addComponent(btnN)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(btnInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(pilBos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 255));
@@ -399,6 +554,48 @@ public class SupplierPembelian extends javax.swing.JFrame {
         
                 
     }//GEN-LAST:event_pembelianTableMouseClicked
+
+    private void btnInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInputActionPerformed
+        String id = txtID.getText();
+        Date tanggal = txtTanggal.getDate();
+        java.sql.Date temptanggal = new java.sql.Date(tanggal.getTime());
+        double total = Double.parseDouble(txtTotal.getText());
+        String lunas = btnGrupLunas.getSelection().getActionCommand();
+        System.out.println(lunas);
+        String nama_bos = (String)pilBos.getSelectedItem();
+        
+        
+        try {
+            Connection c = koneksi.getKoneksi();
+            String sql = "INSERT INTO pembelian VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setString(1, id);
+            p.setDate(2, temptanggal);
+            p.setDouble(3, total);
+            p.setString(4, lunas);
+            p.setString(5, nama_bos);
+            p.executeUpdate();
+            p.close();
+            JOptionPane.showMessageDialog(null, "Data Terubah");
+            clear();
+        } catch (Exception e) {
+            System.out.println("update error");
+        }finally{
+            loadData();
+        }
+    }//GEN-LAST:event_btnInputActionPerformed
+
+    private void btnYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnYActionPerformed
+        btnY.setActionCommand(btnY.getText());
+    }//GEN-LAST:event_btnYActionPerformed
+
+    private void pilBosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilBosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pilBosActionPerformed
+
+    private void btnNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNActionPerformed
+        btnN.setActionCommand(btnN.getText());
+    }//GEN-LAST:event_btnNActionPerformed
     
     
     
@@ -412,6 +609,10 @@ public class SupplierPembelian extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup btnGrupLunas;
+    private javax.swing.JButton btnInput;
+    private javax.swing.JRadioButton btnN;
+    private javax.swing.JRadioButton btnY;
     private javax.swing.JButton buttonCariBarang;
     private javax.swing.JButton buttonHome;
     private javax.swing.JButton buttonKasir;
@@ -424,11 +625,20 @@ public class SupplierPembelian extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTable pembelianTable;
+    private javax.swing.JComboBox<String> pilBos;
+    private javax.swing.JTextField txtID;
+    private com.toedter.calendar.JDateChooser txtTanggal;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
