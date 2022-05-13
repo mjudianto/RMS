@@ -68,7 +68,16 @@ public class Penjualan extends javax.swing.JFrame {
         }
 }
  
-   
+   public void getDate(){
+       DetailPenjualan detail = new DetailPenjualan();
+       int baris = DataPenjualan.getSelectedRow();
+       String Tanggal = DataPenjualan.getValueAt(baris,1).toString();
+       detail.tanggal.setText(" ~ Tanggal Penjualan : " + Tanggal + " ~ ");
+       
+       detail.setVisible(true);
+       detail.pack();
+       dispose();
+   }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -401,11 +410,15 @@ public class Penjualan extends javax.swing.JFrame {
             }
                 }
                 case JOptionPane.NO_OPTION://detail
+                    new DetailPenjualan().show(true);
+                    
                 break;
             }
         }else{
             JOptionPane.showMessageDialog(null,"ERROR");
         }
+        
+                getDate();
     }//GEN-LAST:event_DataPenjualanMouseClicked
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
@@ -500,7 +513,7 @@ public class Penjualan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable DataPenjualan;
+    public javax.swing.JTable DataPenjualan;
     private javax.swing.JButton buttonCariBarang;
     private javax.swing.JButton buttonHome;
     private javax.swing.JButton buttonKasir;
