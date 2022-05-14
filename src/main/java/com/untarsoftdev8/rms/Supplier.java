@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Jmslord
  */
 public class Supplier extends javax.swing.JFrame {
-    String id_bos;
+    int id_bos;
     String nama_bos;
     String no_telp;
     Koneksi koneksi = new Koneksi();
@@ -34,12 +34,25 @@ public class Supplier extends javax.swing.JFrame {
             
             while (r.next()) {
                 Object[] o = new Object[7];
-                o [0] = r.getString("id_bos");
+                o [0] = r.getInt("id_bos");
                 o [1] = r.getString("nama_bos");
                 o [2] = r.getString("no_telp");
                 
                 model.addRow(o);
             }
+            sql = "SELECT max(id_bos) FROM supplier";
+            r = s.executeQuery(sql);
+            
+            while (r.next()) {
+                int tempid=r.getInt("max(id_bos)")+1;
+                System.out.println(tempid);
+                if(tempid==1){
+                    tempid=300000;
+                }
+                txtID.setText(String.valueOf(tempid));
+                id_bos=tempid;
+            }
+            
             r.close();
             s.close();
         } catch (Exception e) {
@@ -47,7 +60,7 @@ public class Supplier extends javax.swing.JFrame {
         }
     }
     public void clear(){
-        txtID.setText("");
+        txtID.setText(String.valueOf(id_bos+1));
         txtNama.setText("");
         txtNoTelp.setText("");
     }
@@ -399,17 +412,17 @@ public class Supplier extends javax.swing.JFrame {
 
     private void btnInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInputActionPerformed
         // TODO add your handling code here:
-        String id = txtID.getText();
+        //int id = Integer.parseInt(txtID.getText());
         String nama = txtNama.getText();
         String no_telp = txtNoTelp.getText();
         
         try {
             Connection c = koneksi.getKoneksi();
-            String sql = "INSERT INTO supplier VALUES (?, ?, ?);";
+            String sql = "INSERT INTO supplier (nama_bos,no_telp) VALUES (?, ?);";
             PreparedStatement p = c.prepareStatement(sql);
-            p.setString(1, id);
-            p.setString(2, nama);
-            p.setString(3, no_telp);
+            //p.setInt(1, id);
+            p.setString(1, nama);
+            p.setString(2, no_telp);
             
             p.executeUpdate();
             p.close();
@@ -439,7 +452,7 @@ public class Supplier extends javax.swing.JFrame {
         if (i == -1) {
             return;
         }
-        String id = (String) model.getValueAt(i, 0);
+        int id = (int) model.getValueAt(i, 0);
         String tempnama_bos = txtNama.getText();
         String tempnotelp = txtNoTelp.getText();
         
@@ -449,7 +462,7 @@ public class Supplier extends javax.swing.JFrame {
             PreparedStatement p = c.prepareStatement(sql);
             p.setString(1, tempnama_bos);
             p.setString(2, tempnotelp);
-            p.setString(3, id);
+            p.setInt(3, id);
             
             p.executeUpdate();
             p.close();
@@ -499,7 +512,7 @@ public class Supplier extends javax.swing.JFrame {
             return;
         }
         
-        String id = (String) model.getValueAt(i, 0);
+        int id = (int) model.getValueAt(i, 0);
         
         int pernyataan = JOptionPane.showConfirmDialog(null, "Yakin Data Akan Dihapus","Konfirmasi", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (pernyataan== JOptionPane.OK_OPTION) {
@@ -507,7 +520,7 @@ public class Supplier extends javax.swing.JFrame {
                 Connection c = koneksi.getKoneksi();
                 String sql = "DELETE FROM supplier WHERE id_bos = ?";
                 PreparedStatement p = c.prepareStatement(sql);
-                p.setString(1, id);
+                p.setInt(1, id);
                 p.executeUpdate();
                 p.close();
                 JOptionPane.showMessageDialog(null, "Data Terhapus");
@@ -529,12 +542,12 @@ public class Supplier extends javax.swing.JFrame {
             return;
         }
         
-        String tempid = (String) model.getValueAt(i, 0);
+        int tempid = (int) model.getValueAt(i, 0);
         String tempnama_bos = (String) model.getValueAt(i, 1);
         String tempno_telp = (String) model.getValueAt(i, 2);
         
         
-        txtID.setText(tempid);
+        txtID.setText(String.valueOf(tempid));
         txtNama.setText(tempnama_bos);
         txtNoTelp.setText(tempno_telp);
     }//GEN-LAST:event_supplierTableMouseClicked
