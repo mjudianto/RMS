@@ -189,7 +189,7 @@ public class DetailPembelian extends javax.swing.JFrame {
 
     private void TambahBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahBarangMouseClicked
         // TODO add your handling code here:
-        new TambahBarangPenjualan().show(true);
+       
     }//GEN-LAST:event_TambahBarangMouseClicked
 
     /**

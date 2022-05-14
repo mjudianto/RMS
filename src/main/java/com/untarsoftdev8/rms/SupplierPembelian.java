@@ -70,7 +70,6 @@ public class SupplierPembelian extends javax.swing.JFrame {
     public void clear(){
         txtID.setText("");
         txtTanggal.setDate(null);
-        txtTotal.setText("");
         pilBos.setSelectedItem(-1);
     }
     
@@ -564,7 +563,6 @@ public class SupplierPembelian extends javax.swing.JFrame {
         String id = txtID.getText();
         Date tanggal = txtTanggal.getDate();
         java.sql.Date temptanggal = new java.sql.Date(tanggal.getTime());
-        double total = Double.parseDouble(txtTotal.getText());
         String lunas = btnGrupLunas.getSelection().getActionCommand();
         System.out.println(lunas);
         String nama_bos = (String)pilBos.getSelectedItem();
@@ -576,7 +574,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
             PreparedStatement p = c.prepareStatement(sql);
             p.setString(1, id);
             p.setDate(2, temptanggal);
-            p.setDouble(3, total);
+            p.setDouble(3, 0.0);
             p.setString(4, lunas);
             p.setString(5, nama_bos);
             p.executeUpdate();
