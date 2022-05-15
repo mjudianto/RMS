@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Jmslord
  */
 public class SupplierPembelian extends javax.swing.JFrame {
-
+    int id_pembelian;
     Koneksi koneksi = new Koneksi();
     public SupplierPembelian() {
         initComponents();
@@ -52,7 +52,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
             
             while (r.next()) {
                 Object[] o = new Object[5];
-                o [0] = r.getString("id_pembelian");
+                o [0] = r.getInt("id_pembelian");
                 o [1] = r.getDate("tanggal");
                 o [2] = r.getDouble("total");
                 o [3] = r.getString("lunas");
@@ -60,6 +60,19 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 
                 model.addRow(o);
             }
+            sql = "SELECT max(id_pembelian) FROM pembelian";
+            r = s.executeQuery(sql);
+            
+            while (r.next()) {
+                int tempid=r.getInt("max(id_pembelian)")+1;
+                System.out.println(tempid);
+                if(tempid==1){
+                    tempid=300000;
+                }
+                txtID.setText(String.valueOf(tempid));
+                id_pembelian=tempid;
+            }
+            
             r.close();
             s.close();
         } catch (Exception e) {
@@ -68,7 +81,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
     }
     
     public void clear(){
-        txtID.setText("");
+        txtID.setText(String.valueOf(id_pembelian+1));
         txtTanggal.setDate(null);
         pilBos.setSelectedItem(-1);
     }
@@ -532,12 +545,12 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 String pilihan1[] = {"HAPUS", "BATAL"};
                 int pilih1 = JOptionPane.showOptionDialog(null, "HAPUS INI?", "KONFIRMASI", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, pilihan1, pilihan1[0]);
                 if (pilih1 == JOptionPane.YES_OPTION) {
-                    String idpembelian = pembelianTable.getValueAt(baris, 0).toString();
+                    int idpembelian = (int) pembelianTable.getValueAt(baris, 0);
                     try {
                     Connection c = koneksi.getKoneksi();
                     String sql = "DELETE FROM pembelian WHERE id_pembelian = ?";
                     PreparedStatement p = c.prepareStatement(sql);
-                    p.setString(1, idpembelian);
+                    p.setInt(1, idpembelian);
                     p.executeUpdate();
                     p.close();
                     JOptionPane.showMessageDialog(null, "Data Terhapus");
@@ -582,7 +595,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonPembelian1ActionPerformed
 
     private void btnInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInputActionPerformed
-        String id = txtID.getText();
+        
         Date tanggal = txtTanggal.getDate();
         java.sql.Date temptanggal = new java.sql.Date(tanggal.getTime());
         String lunas = btnGrupLunas.getSelection().getActionCommand();
@@ -592,13 +605,13 @@ public class SupplierPembelian extends javax.swing.JFrame {
         
         try {
             Connection c = koneksi.getKoneksi();
-            String sql = "INSERT INTO pembelian VALUES (?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO pembelian(tanggal,total,lunas,nama_supplier) VALUES (?, ?, ?, ?);";
             PreparedStatement p = c.prepareStatement(sql);
-            p.setString(1, id);
-            p.setDate(2, temptanggal);
-            p.setDouble(3, 0.0);
-            p.setString(4, lunas);
-            p.setString(5, nama_bos);
+           
+            p.setDate(1, temptanggal);
+            p.setDouble(2, 0.0);
+            p.setString(3, lunas);
+            p.setString(4, nama_bos);
             p.executeUpdate();
             p.close();
             JOptionPane.showMessageDialog(null, "Data Terubah");

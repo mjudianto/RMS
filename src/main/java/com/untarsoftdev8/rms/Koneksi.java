@@ -5,6 +5,7 @@
 package com.untarsoftdev8.rms;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
@@ -71,6 +72,30 @@ public class Koneksi {
             System.out.println(ex);
         }
     }
+    
+    private static void createTableDetailPembelian() {
+        
+            String sqlCreate = "CREATE TABLE IF NOT EXISTS detailpembelian "
+                    + "  (id_barang           INT PRIMARY KEY ,"
+                    + "   nama_barang         VARCHAR(20) NOT NULL,"
+                    + "   tipe_barang         VARCHAR(20) NOT NULL,"
+                    + "   merek_barang        VARCHAR(20) NOT NULL,"
+                    + "   stok_barang         INT NOT NULL,"
+                    + "   harga_barang        DOUBLE NOT NULL,"
+                    + "   id_pembelian        INT NOT NULL,"
+                    + "   FOREIGN KEY (id_pembelian) REFERENCES pembelian(id_pembelian))";
+                    
+            
+            Statement stmt;
+        try {
+            stmt = koneksi.createStatement();
+            stmt.execute(sqlCreate);
+            System.out.println("tabel detail pembelian Berhasil atau sudah ada");
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+    
     private static void createTablePenjualan() {
         
             String sqlCreate = "CREATE TABLE IF NOT EXISTS penjualan "
@@ -108,14 +133,14 @@ public class Koneksi {
         }
     }
     
-    private static void deleteTable(String table) {
-            
-            String sqlCreate = "DELETE FROM '"+ table+"'";
-            
-            Statement stmt;
+    private static void deleteTable(String table) {     
         try {
-            stmt = koneksi.createStatement();
-            stmt.execute(sqlCreate);
+            String sql = "DROP TABLE ?";
+            Connection c = koneksi;
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setString(1, table);
+            p.executeUpdate();
+            p.close();
             System.out.println("delete "+table);
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -141,8 +166,9 @@ public class Koneksi {
         createTableStok();
         createTablePenjualan();
         createTablePembelian();
+        createTableDetailPembelian();
         //alterSupplier();
-        //deleteTable("supplier");
+        //deleteTable("detailpembelian");
     }
     
 }
