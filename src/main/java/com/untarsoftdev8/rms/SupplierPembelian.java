@@ -119,6 +119,17 @@ public class SupplierPembelian extends javax.swing.JFrame {
 
     }
     
+    public void getID(){
+       DetailSupplierPembelian detail = new DetailSupplierPembelian();
+       int baris = pembelianTable.getSelectedRow();
+       int tempid = (int) pembelianTable.getValueAt(baris,0);
+       detail.txtDetail.setText(" ~ ID Pembelian : " + tempid + " ~ ");
+       detail.id_pembelian=tempid;
+       detail.setVisible(true);
+       detail.pack();
+       dispose();
+   }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -562,7 +573,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 break;
                 }
                 case JOptionPane.NO_OPTION://detail
-                    new DetailSupplierPembelian().show(true);
+                    getID();
                     
                 break;
             }

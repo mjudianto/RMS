@@ -15,18 +15,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DetailSupplierPembelian extends javax.swing.JFrame {
     Koneksi koneksi = new Koneksi();
-    
+    public int id_pembelian;
     public DetailSupplierPembelian() {
         initComponents();
         model = new DefaultTableModel();
         detailTable.setModel(model);
         
+        model.addColumn("id_barang");
+        model.addColumn("nama_barang");
+        model.addColumn("tipe_barang");
+        model.addColumn("merek_barang");
+        model.addColumn("stok_barang");
+        model.addColumn("harga_barang");
         model.addColumn("id_pembelian");
-        model.addColumn("nama");
-        model.addColumn("tipe");
-        model.addColumn("merek");
-        model.addColumn("jumlah");
-        model.addColumn("harga");
         
         loadData();
     }
@@ -45,12 +46,14 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
             ResultSet r = s.executeQuery(sql);
             
             while (r.next()) {
-                Object[] o = new Object[5];
-                o [0] = r.getInt("id_pembelian");
-                o [1] = r.getDate("tanggal");
-                o [2] = r.getDouble("total");
-                o [3] = r.getString("lunas");
-                o [4] = r.getString("nama_supplier");
+                Object[] o = new Object[7];
+                o [0] = r.getInt("id_barang");
+                o [1] = r.getDate("nama_barang");
+                o [2] = r.getDouble("tipe_barang");
+                o [3] = r.getString("merek_barang");
+                o [4] = r.getString("stok_barang");
+                o [5] = r.getString("harga_barang");
+                o [6] = r.getString("id_pembelian");
                 
                 model.addRow(o);
             }
@@ -66,7 +69,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField2 = new javax.swing.JTextField();
+        txtDetail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -75,7 +78,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField2.setEditable(false);
+        txtDetail.setEditable(false);
 
         detailTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,7 +125,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(16, 16, 16)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(144, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -140,7 +143,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(16, 16, 16)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(499, Short.MAX_VALUE)))
         );
 
@@ -148,7 +151,9 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        new TambahBarangSupplierPembelian().setVisible(true);
+        TambahBarangSupplierPembelian tambah = new TambahBarangSupplierPembelian();
+        tambah.setVisible(true);
+        tambah.temppembelian = id_pembelian;
     }//GEN-LAST:event_btnTambahActionPerformed
 
     /**
@@ -191,7 +196,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     private javax.swing.JTable detailTable;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    public javax.swing.JTextField txtDetail;
     // End of variables declaration//GEN-END:variables
 }

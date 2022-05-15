@@ -4,18 +4,23 @@
  */
 package com.untarsoftdev8.rms;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Venny
  */
 public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
-
+    Koneksi koneksi = new Koneksi();
     /**
      * Creates new form TambahBarangSupplierPembelian
      */
     public TambahBarangSupplierPembelian() {
         initComponents();
     }
+    public int temppembelian;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,7 +42,7 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnSimpan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,7 +59,12 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
 
         jLabel6.setText("Harga Barang :");
 
-        jButton1.setText("Simpan");
+        btnSimpan.setText("Simpan");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,7 +78,7 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -125,12 +135,46 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
                     .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        int tempbarang =1;
+        String tempnama = txtNama.getText();
+        String temptipe = txtTipe.getText();
+        String tempmerek = txtMerek.getText();
+        double tempharga = Double.parseDouble(txtHarga.getText());
+        int tempstok = Integer.parseInt(txtJumlah.getText());
+        
+        try {
+            Connection c = koneksi.getKoneksi();
+            String sql = "INSERT INTO detailpembelian VALUES (?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1, tempbarang);
+            p.setString(2, tempnama);
+            p.setString(3, temptipe);
+            p.setString(4, tempmerek);
+            p.setInt(5, tempstok);
+            p.setDouble(6, tempharga);
+            p.setInt(7, temppembelian);
+            
+            p.executeUpdate();
+            p.close();
+            JOptionPane.showMessageDialog(null, "Data Terubah");
+            tempbarang++;
+            
+        } catch (Exception e) {
+            System.out.println("update error");
+        }finally{
+            DetailSupplierPembelian detpembelian = new DetailSupplierPembelian();
+            detpembelian.loadData();
+            this.setVisible(false);
+        }                  
+    }//GEN-LAST:event_btnSimpanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,7 +212,7 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
