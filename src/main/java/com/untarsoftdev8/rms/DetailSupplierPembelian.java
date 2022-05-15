@@ -5,6 +5,7 @@
 package com.untarsoftdev8.rms;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
@@ -15,9 +16,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DetailSupplierPembelian extends javax.swing.JFrame {
     Koneksi koneksi = new Koneksi();
-    public int id_pembelian;
-    public DetailSupplierPembelian() {
+    public static int id_pembelian;
+    private DefaultTableModel model;
+    public DetailSupplierPembelian(int tempid) {
         initComponents();
+        id_pembelian=tempid;
         model = new DefaultTableModel();
         detailTable.setModel(model);
         
@@ -31,35 +34,37 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         
         loadData();
     }
-    private DefaultTableModel model;
+    
     
     public void loadData(){
         model.getDataVector().removeAllElements();
         
         model.fireTableDataChanged();
-        
+        //id_pembelian=SupplierPembelian.getTempID();
+        System.out.println("id_pembelian: "+id_pembelian);
         try {
             Connection c = koneksi.getKoneksi();
-            Statement s = c.createStatement();
-            
-            String sql = "SELECT * FROM detailpembelian";
-            ResultSet r = s.executeQuery(sql);
+            PreparedStatement ps;
+            String sql = "SELECT * FROM detailpembelian where id_pembelian=?";
+            ps=c.prepareStatement(sql);
+            ps.setInt(1, id_pembelian);
+            ResultSet r = ps.executeQuery();
             
             while (r.next()) {
                 Object[] o = new Object[7];
                 o [0] = r.getInt("id_barang");
-                o [1] = r.getDate("nama_barang");
-                o [2] = r.getDouble("tipe_barang");
+                o [1] = r.getString("nama_barang");
+                o [2] = r.getString("tipe_barang");
                 o [3] = r.getString("merek_barang");
-                o [4] = r.getString("stok_barang");
-                o [5] = r.getString("harga_barang");
-                o [6] = r.getString("id_pembelian");
+                o [4] = r.getInt("stok_barang");
+                o [5] = r.getDouble("harga_barang");
+                o [6] = r.getInt("id_pembelian");
                 
                 model.addRow(o);
             }
             
             r.close();
-            s.close();
+            ps.close();
         } catch (Exception e) {
             System.out.println("terjadi kesalahan");
         }
@@ -75,6 +80,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         btnTambah = new javax.swing.JButton();
+        btnKembali = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,23 +110,32 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
             }
         });
 
+        btnKembali.setText("Kembali");
+        btnKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKembaliActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnTambah))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnTambah, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -138,23 +153,29 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnKembali))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(16, 16, 16)
                     .addComponent(txtDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(499, Short.MAX_VALUE)))
+                    .addContainerGap(501, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        TambahBarangSupplierPembelian tambah = new TambahBarangSupplierPembelian();
-        tambah.setVisible(true);
+        TambahBarangSupplierPembelian tambah = new TambahBarangSupplierPembelian(id_pembelian);
         tambah.temppembelian = id_pembelian;
+        tambah.setVisible(true);
     }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+        this.setVisible(false);
+        new SupplierPembelian().setVisible(true);
+    }//GEN-LAST:event_btnKembaliActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,12 +207,13 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetailSupplierPembelian().setVisible(true);
+                new DetailSupplierPembelian(id_pembelian).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnTambah;
     private javax.swing.JTable detailTable;
     private javax.swing.JLabel jLabel4;

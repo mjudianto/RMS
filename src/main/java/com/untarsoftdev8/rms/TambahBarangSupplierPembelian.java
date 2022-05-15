@@ -6,6 +6,7 @@ package com.untarsoftdev8.rms;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,10 +18,12 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
     /**
      * Creates new form TambahBarangSupplierPembelian
      */
-    public TambahBarangSupplierPembelian() {
+    public static int temppembelian;
+    public TambahBarangSupplierPembelian(int tempbuy) {
         initComponents();
+        temppembelian = tempbuy;
     }
-    public int temppembelian;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -141,9 +144,9 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    int tempbarang =0;
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        int tempbarang =1;
+        
         String tempnama = txtNama.getText();
         String temptipe = txtTipe.getText();
         String tempmerek = txtMerek.getText();
@@ -153,7 +156,16 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
         try {
             Connection c = koneksi.getKoneksi();
             String sql = "INSERT INTO detailpembelian VALUES (?, ?, ?, ?, ?, ?, ?);";
-            PreparedStatement p = c.prepareStatement(sql);
+            String sql1 = "SELECT MAX(id_barang) FROM detailpembelian WHERE id_pembelian=? ;";
+            PreparedStatement p = c.prepareStatement(sql1);
+            p.setInt(1,temppembelian);
+            ResultSet r=p.executeQuery();
+            while (r.next()) {
+                tempbarang=r.getInt("MAX(id_barang)")+1;
+            }
+            System.out.println("temp barang: "+tempbarang);
+            r.close();
+            p=c.prepareStatement(sql);
             p.setInt(1, tempbarang);
             p.setString(2, tempnama);
             p.setString(3, temptipe);
@@ -165,14 +177,14 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
             p.executeUpdate();
             p.close();
             JOptionPane.showMessageDialog(null, "Data Terubah");
-            tempbarang++;
+            //tempbarang++;
             
         } catch (Exception e) {
-            System.out.println("update error");
+            System.out.println(e);
         }finally{
-            DetailSupplierPembelian detpembelian = new DetailSupplierPembelian();
-            detpembelian.loadData();
             this.setVisible(false);
+            DetailSupplierPembelian detail = new DetailSupplierPembelian(temppembelian);
+            detail.setVisible(true);
         }                  
     }//GEN-LAST:event_btnSimpanActionPerformed
 
@@ -206,7 +218,7 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TambahBarangSupplierPembelian().setVisible(true);
+                new TambahBarangSupplierPembelian(temppembelian).setVisible(true);
             }
         });
     }
