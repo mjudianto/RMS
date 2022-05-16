@@ -46,6 +46,7 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnSimpan = new javax.swing.JButton();
+        btnKembali = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,6 +70,13 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
             }
         });
 
+        btnKembali.setText("Kembali");
+        btnKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKembaliActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,6 +89,8 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +148,9 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
                     .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnKembali))
                 .addContainerGap())
         );
 
@@ -155,13 +167,18 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
         
         try {
             Connection c = koneksi.getKoneksi();
-            String sql = "INSERT INTO detailpembelian VALUES (?, ?, ?, ?, ?, ?, ?);";
-            String sql1 = "SELECT MAX(id_barang) FROM detailpembelian WHERE id_pembelian=? ;";
+            String sql = "INSERT INTO detailpembelian (id_barang, nama_barang, tipe_barang, merek_barang, stok_barang, harga_barang,id_pembelian)"
+                        +"VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String sql1 = "SELECT MAX(id_barang) FROM detailpembelian";
             PreparedStatement p = c.prepareStatement(sql1);
-            p.setInt(1,temppembelian);
+            
             ResultSet r=p.executeQuery();
             while (r.next()) {
                 tempbarang=r.getInt("MAX(id_barang)")+1;
+                System.out.println("max barang: "+tempbarang);
+                if(tempbarang==0){
+                    tempbarang++;
+                }
             }
             System.out.println("temp barang: "+tempbarang);
             r.close();
@@ -173,7 +190,6 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
             p.setInt(5, tempstok);
             p.setDouble(6, tempharga);
             p.setInt(7, temppembelian);
-            
             p.executeUpdate();
             p.close();
             JOptionPane.showMessageDialog(null, "Data Terubah");
@@ -182,11 +198,16 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }finally{
-            this.setVisible(false);
+            this.dispose();
             DetailSupplierPembelian detail = new DetailSupplierPembelian(temppembelian);
             detail.setVisible(true);
         }                  
     }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+        this.dispose();
+        new DetailSupplierPembelian(temppembelian).setVisible(true);
+    }//GEN-LAST:event_btnKembaliActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,6 +245,7 @@ public class TambahBarangSupplierPembelian extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

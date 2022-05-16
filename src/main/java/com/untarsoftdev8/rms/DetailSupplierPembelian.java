@@ -4,10 +4,12 @@
  */
 package com.untarsoftdev8.rms;
 
+import static com.untarsoftdev8.rms.TambahBarangSupplierPembelian.temppembelian;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,12 +20,13 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     Koneksi koneksi = new Koneksi();
     public static int id_pembelian;
     private DefaultTableModel model;
+    public double totalpembelian;
     public DetailSupplierPembelian(int tempid) {
         initComponents();
         id_pembelian=tempid;
         model = new DefaultTableModel();
         detailTable.setModel(model);
-        
+        model.addColumn("id_detail");
         model.addColumn("id_barang");
         model.addColumn("nama_barang");
         model.addColumn("tipe_barang");
@@ -52,14 +55,15 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
             ResultSet r = ps.executeQuery();
             
             while (r.next()) {
-                Object[] o = new Object[7];
-                o [0] = r.getInt("id_barang");
-                o [1] = r.getString("nama_barang");
-                o [2] = r.getString("tipe_barang");
-                o [3] = r.getString("merek_barang");
-                o [4] = r.getInt("stok_barang");
-                o [5] = r.getDouble("harga_barang");
-                o [6] = r.getInt("id_pembelian");
+                Object[] o = new Object[8];
+                o [0] = r.getInt("id_detail");
+                o [1] = r.getInt("id_barang");
+                o [2] = r.getString("nama_barang");
+                o [3] = r.getString("tipe_barang");
+                o [4] = r.getString("merek_barang");
+                o [5] = r.getInt("stok_barang");
+                o [6] = r.getDouble("harga_barang");
+                o [7] = r.getInt("id_pembelian");
                 
                 model.addRow(o);
             }
@@ -67,7 +71,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
             r.close();
             ps.close();
         } catch (Exception e) {
-            System.out.println("terjadi kesalahan");
+            System.out.println("load data "+e);
         }
     }
     
@@ -75,18 +79,23 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         try {
             Connection c = koneksi.getKoneksi();
             PreparedStatement ps;
-            String sql = "SELECT sum(stok_barang * harga_barang) FROM detailpembelian ";
+            String sql = " SELECT sum(stok_barang * harga_barang) FROM detailpembelian where id_pembelian=? ";
             ps=c.prepareStatement(sql);
+            ps.setInt(1,id_pembelian);
             ResultSet r = ps.executeQuery();
             if(r.next()){
                 String sum=r.getString("sum(stok_barang * harga_barang)");
                 txTotal.setText(sum);
+                totalpembelian=Double.parseDouble(sum);
+                System.out.println("Total pembelian: "+totalpembelian);
             }
+            r.close();
         } catch (Exception e) {
-            System.out.println("terjadi kesalahan");
+            System.out.println("kesalahan gettotal: "+e);
         }
         
     }
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -119,6 +128,11 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
                 "ID", "NAMA", "TIPE", "MEREK", "JUMLAH", "HARGA"
             }
         ));
+        detailTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                detailTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(detailTable);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -195,15 +209,96 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         tambah.temppembelian = id_pembelian;
         tambah.setVisible(true);
     }//GEN-LAST:event_btnTambahActionPerformed
-
+    String tempnamasup;
+    private void getNamaSupplier(){
+        try{
+            Connection c = koneksi.getKoneksi();
+            String sql="SELECT nama_supplier FROM pembelian WHERE id_pembelian=?";
+            PreparedStatement p=c.prepareStatement(sql);
+            p.setInt(1, id_pembelian);
+            ResultSet r = p.executeQuery();
+            if(r.next()){
+                tempnamasup=r.getString("nama_supplier");
+                System.out.println("Nama Supplier: "+tempnamasup);
+            }
+            r.close();
+            p.close();
+        }
+        catch (Exception e) {
+            System.out.println("get supplier"+e);
+        }
+    }
+    private void insertStok(){
+        try{
+            Connection c = koneksi.getKoneksi();
+            String sql="INSERT INTO stok(id_barang,nama_barang,tipe_barang,merek_barang,stok_barang,harga_barang,nama_supplier) "
+               +"SELECT id_barang,nama_barang,tipe_barang,merek_barang,stok_barang,harga_barang,? FROM detailpembelian where id_pembelian=?";
+            PreparedStatement p=c.prepareStatement(sql);
+            p.setString(1,tempnamasup);
+            p.setInt(2,id_pembelian);
+            p.executeUpdate();
+            p.close();
+        }
+        catch (Exception e) {
+            System.out.println("insert stok"+e);
+        }
+            
+    }
+    
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
         this.setVisible(false);
-        new SupplierPembelian().setVisible(true);
+        try {
+            Connection c = koneksi.getKoneksi();
+            String sql = "UPDATE pembelian SET total=? WHERE id_pembelian = ?;";
+            PreparedStatement p = c.prepareStatement(sql);
+            p=c.prepareStatement(sql);
+            p.setDouble(1, totalpembelian);
+            p.setInt(2, id_pembelian);
+            p.executeUpdate();
+            p.close();
+            getNamaSupplier();
+            insertStok();
+        } catch (Exception e) {
+            System.out.println("btn kembali "+e);
+        }finally{
+            new SupplierPembelian().setVisible(true);
+        }                  
+        
     }//GEN-LAST:event_btnKembaliActionPerformed
 
     private void txtDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDetailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDetailActionPerformed
+
+    private void detailTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_detailTableMouseClicked
+       int i = detailTable.getSelectedRow();
+        if (i == -1) {
+            return;
+        }
+        
+        int id = (int) model.getValueAt(i, 0);
+        
+        int pernyataan = JOptionPane.showConfirmDialog(null, "Yakin Data Akan Dihapus","Konfirmasi", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (pernyataan== JOptionPane.OK_OPTION) {
+            try {
+                Connection c = koneksi.getKoneksi();
+                String sql = "DELETE FROM detailpembelian WHERE id_detail = ?";
+                PreparedStatement p = c.prepareStatement(sql);
+                p.setInt(1, id);
+                p.executeUpdate();
+                p.close();
+                JOptionPane.showMessageDialog(null, "Data Terhapus");
+            } catch (Exception e) {
+                System.out.println("Terjadi Kesalahan");
+            }finally{
+                loadData();
+                getTotal();
+            }
+        }
+        if (pernyataan== JOptionPane.CANCEL_OPTION) {
+            
+        }
+    }//GEN-LAST:event_detailTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -246,7 +341,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     private javax.swing.JTable detailTable;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txTotal;
+    public static javax.swing.JTextField txTotal;
     public javax.swing.JTextField txtDetail;
     // End of variables declaration//GEN-END:variables
 }
