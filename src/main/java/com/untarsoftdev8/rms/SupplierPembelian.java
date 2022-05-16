@@ -35,6 +35,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
         model.addColumn("nama_supplier");
         
         loadData();
+        getTotalUtang();
     }
 
     private DefaultTableModel model;
@@ -151,6 +152,24 @@ public class SupplierPembelian extends javax.swing.JFrame {
             ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("terjadi kesalahan");
+        }
+    }
+     
+    public void getTotalUtang(){
+        try {
+            Connection c = koneksi.getKoneksi();
+            PreparedStatement ps;
+            String sql = " SELECT sum(total) FROM pembelian where lunas='N' ";
+            ps=c.prepareStatement(sql);
+            ResultSet r = ps.executeQuery();
+            if(r.next()){
+                double sum=r.getDouble("sum(total)");
+                String tempsum = String.valueOf(sum);
+                TotalUtang.setText(tempsum);
+                System.out.println("Total utang: "+tempsum);
+            }
+        } catch (Exception e) {
+            System.out.println("kesalahan gettotalutang: "+e);
         }
     }
     @SuppressWarnings("unchecked")
