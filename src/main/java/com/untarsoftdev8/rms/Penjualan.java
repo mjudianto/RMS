@@ -411,14 +411,14 @@ public class Penjualan extends javax.swing.JFrame {
                 }
                 case JOptionPane.NO_OPTION://detail
                     new DetailPenjualan().show(true);
-                    
+                     getDate();
                 break;
             }
         }else{
             JOptionPane.showMessageDialog(null,"ERROR");
         }
         
-                getDate();
+               
     }//GEN-LAST:event_DataPenjualanMouseClicked
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed

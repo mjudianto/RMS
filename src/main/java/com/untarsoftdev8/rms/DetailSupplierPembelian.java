@@ -85,6 +85,11 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         txtDetail.setEditable(false);
+        txtDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDetailActionPerformed(evt);
+            }
+        });
 
         detailTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,6 +181,10 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         this.setVisible(false);
         new SupplierPembelian().setVisible(true);
     }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void txtDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDetailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDetailActionPerformed
 
     /**
      * @param args the command line arguments

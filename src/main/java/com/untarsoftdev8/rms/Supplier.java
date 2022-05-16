@@ -425,7 +425,7 @@ public class Supplier extends javax.swing.JFrame {
             
             p.executeUpdate();
             p.close();
-            JOptionPane.showMessageDialog(null, "Data Terubah");
+            JOptionPane.showMessageDialog(null, "Data Tersimpan");
             clear();
         } catch (Exception e) {
             System.out.println("update error");
