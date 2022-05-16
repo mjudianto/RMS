@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Jmslord
  */
 public class SupplierPembelian extends javax.swing.JFrame {
-
+    int id_pembelian;
     Koneksi koneksi = new Koneksi();
     public SupplierPembelian() {
         initComponents();
@@ -52,7 +52,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
             
             while (r.next()) {
                 Object[] o = new Object[5];
-                o [0] = r.getString("id_pembelian");
+                o [0] = r.getInt("id_pembelian");
                 o [1] = r.getDate("tanggal");
                 o [2] = r.getDouble("total");
                 o [3] = r.getString("lunas");
@@ -60,6 +60,19 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 
                 model.addRow(o);
             }
+            sql = "SELECT max(id_pembelian) FROM pembelian";
+            r = s.executeQuery(sql);
+            
+            while (r.next()) {
+                int tempid=r.getInt("max(id_pembelian)")+1;
+                System.out.println(tempid);
+                if(tempid==1){
+                    tempid=300000;
+                }
+                txtID.setText(String.valueOf(tempid));
+                id_pembelian=tempid;
+            }
+            
             r.close();
             s.close();
         } catch (Exception e) {
@@ -68,7 +81,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
     }
     
     public void clear(){
-        txtID.setText("");
+        txtID.setText(String.valueOf(id_pembelian+1));
         txtTanggal.setDate(null);
         pilBos.setSelectedItem(-1);
     }
@@ -105,6 +118,21 @@ public class SupplierPembelian extends javax.swing.JFrame {
         }
 
     }
+    public static int tempid;
+    public static int getTempID(){
+        return tempid;
+    }
+    public void getID(){
+       int baris = pembelianTable.getSelectedRow();
+       tempid = (int) pembelianTable.getValueAt(baris,0);
+       System.out.println(tempid);
+       DetailSupplierPembelian detail = new DetailSupplierPembelian(tempid);
+       detail.txtDetail.setText(" ~ ID Pembelian : " + tempid + " ~ ");
+       detail.id_pembelian=tempid;
+       detail.setVisible(true);
+       detail.pack();
+       dispose();
+   }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -121,7 +149,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        btnInput = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         txtID = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -129,7 +157,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
         btnN = new javax.swing.JRadioButton();
         pilBos = new javax.swing.JComboBox<>();
         txtTanggal = new com.toedter.calendar.JDateChooser();
-        btnInput1 = new javax.swing.JButton();
+        btnInput = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -194,11 +222,11 @@ public class SupplierPembelian extends javax.swing.JFrame {
 
         jLabel6.setText("Tanggal");
 
-        btnInput.setBackground(new java.awt.Color(153, 153, 153));
-        btnInput.setText("EDIT");
-        btnInput.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setBackground(new java.awt.Color(153, 153, 153));
+        btnEdit.setText("EDIT");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInputActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
@@ -232,11 +260,11 @@ public class SupplierPembelian extends javax.swing.JFrame {
         txtTanggal.setDateFormatString("dd/MM/yyyy");
         txtTanggal.setName("jDateChooser"); // NOI18N
 
-        btnInput1.setBackground(new java.awt.Color(153, 153, 153));
-        btnInput1.setText("INPUT");
-        btnInput1.addActionListener(new java.awt.event.ActionListener() {
+        btnInput.setBackground(new java.awt.Color(153, 153, 153));
+        btnInput.setText("INPUT");
+        btnInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInput1ActionPerformed(evt);
+                btnInputActionPerformed(evt);
             }
         });
 
@@ -272,7 +300,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(pilBos, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInput))
+                        .addComponent(btnEdit))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
@@ -291,7 +319,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                     .addContainerGap(498, Short.MAX_VALUE)
-                    .addComponent(btnInput1)
+                    .addComponent(btnInput)
                     .addGap(15, 15, 15)))
         );
         jPanel5Layout.setVerticalGroup(
@@ -312,7 +340,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(btnInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,7 +362,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(48, 48, 48)
-                    .addComponent(btnInput1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(469, Short.MAX_VALUE)))
         );
 
@@ -422,17 +450,16 @@ public class SupplierPembelian extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(41, 41, 41))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(buttonPembelian1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))
+                        .addComponent(jLabel12)
                         .addGap(21, 21, 21))))
             .addComponent(buttonCariBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonPembelian1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(buttonHome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                 .addComponent(buttonKasir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
@@ -448,7 +475,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonPembelian1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonPembelian1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonCariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90))
@@ -484,7 +511,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -532,23 +559,24 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 String pilihan1[] = {"HAPUS", "BATAL"};
                 int pilih1 = JOptionPane.showOptionDialog(null, "HAPUS INI?", "KONFIRMASI", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, pilihan1, pilihan1[0]);
                 if (pilih1 == JOptionPane.YES_OPTION) {
-                    String idpembelian = pembelianTable.getValueAt(baris, 0).toString();
+                    int idpembelian = (int) pembelianTable.getValueAt(baris, 0);
                     try {
-                Connection c = koneksi.getKoneksi();
-                String sql = "DELETE FROM pembelian WHERE id_pembelian = ?";
-                PreparedStatement p = c.prepareStatement(sql);
-                p.setString(1, idpembelian);
-                p.executeUpdate();
-                p.close();
-                JOptionPane.showMessageDialog(null, "Data Terhapus");
-            } catch (Exception e) {
-                System.out.println("Terjadi Kesalahan");
-            }finally{
-                loadData();
-            }
+                    Connection c = koneksi.getKoneksi();
+                    String sql = "DELETE FROM pembelian WHERE id_pembelian = ?";
+                    PreparedStatement p = c.prepareStatement(sql);
+                    p.setInt(1, idpembelian);
+                    p.executeUpdate();
+                    p.close();
+                    JOptionPane.showMessageDialog(null, "Data Terhapus");
+                } catch (Exception e) {
+                    System.out.println("Terjadi Kesalahan");
+                }finally{
+                    loadData();
+                }
+                break;
                 }
                 case JOptionPane.NO_OPTION://detail
-                    new DetailPembelian().show(true);
+                    getID();
                     
                 break;
             }
@@ -559,34 +587,9 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 
     }//GEN-LAST:event_pembelianTableMouseClicked
 
-    private void btnInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInputActionPerformed
-        String id = txtID.getText();
-        Date tanggal = txtTanggal.getDate();
-        java.sql.Date temptanggal = new java.sql.Date(tanggal.getTime());
-        String lunas = btnGrupLunas.getSelection().getActionCommand();
-        System.out.println(lunas);
-        String nama_bos = (String)pilBos.getSelectedItem();
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         
-        
-        try {
-            Connection c = koneksi.getKoneksi();
-            String sql = "INSERT INTO pembelian VALUES (?, ?, ?, ?, ?);";
-            PreparedStatement p = c.prepareStatement(sql);
-            p.setString(1, id);
-            p.setDate(2, temptanggal);
-            p.setDouble(3, 0.0);
-            p.setString(4, lunas);
-            p.setString(5, nama_bos);
-            p.executeUpdate();
-            p.close();
-            JOptionPane.showMessageDialog(null, "Data Terubah");
-            clear();
-        } catch (Exception e) {
-            System.out.println("update error");
-        }finally{
-            loadData();
-        }
-    }//GEN-LAST:event_btnInputActionPerformed
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnYActionPerformed
         btnY.setActionCommand(btnY.getText());
@@ -605,9 +608,34 @@ public class SupplierPembelian extends javax.swing.JFrame {
         new SupplierPembelian().setVisible(true);
     }//GEN-LAST:event_buttonPembelian1ActionPerformed
 
-    private void btnInput1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInput1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInput1ActionPerformed
+    private void btnInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInputActionPerformed
+        
+        Date tanggal = txtTanggal.getDate();
+        java.sql.Date temptanggal = new java.sql.Date(tanggal.getTime());
+        String lunas = btnGrupLunas.getSelection().getActionCommand();
+        System.out.println(lunas);
+        String nama_bos = (String)pilBos.getSelectedItem();
+        
+        
+        try {
+            Connection c = koneksi.getKoneksi();
+            String sql = "INSERT INTO pembelian(tanggal,total,lunas,nama_supplier) VALUES (?, ?, ?, ?);";
+            PreparedStatement p = c.prepareStatement(sql);
+           
+            p.setDate(1, temptanggal);
+            p.setDouble(2, 0.0);
+            p.setString(3, lunas);
+            p.setString(4, nama_bos);
+            p.executeUpdate();
+            p.close();
+            JOptionPane.showMessageDialog(null, "Data Terubah");
+            clear();
+        } catch (Exception e) {
+            System.out.println("update error");
+        }finally{
+            loadData();
+        }
+    }//GEN-LAST:event_btnInputActionPerformed
     
     
     
@@ -621,9 +649,9 @@ public class SupplierPembelian extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEdit;
     private javax.swing.ButtonGroup btnGrupLunas;
     private javax.swing.JButton btnInput;
-    private javax.swing.JButton btnInput1;
     private javax.swing.JRadioButton btnN;
     private javax.swing.JRadioButton btnY;
     private javax.swing.JButton buttonCariBarang;
