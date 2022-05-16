@@ -33,6 +33,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         model.addColumn("id_pembelian");
         
         loadData();
+        getTotal();
     }
     
     
@@ -70,6 +71,22 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         }
     }
     
+    public void getTotal(){
+        try {
+            Connection c = koneksi.getKoneksi();
+            PreparedStatement ps;
+            String sql = "SELECT sum(stok_barang * harga_barang) FROM detailpembelian ";
+            ps=c.prepareStatement(sql);
+            ResultSet r = ps.executeQuery();
+            if(r.next()){
+                String sum=r.getString("sum(stok_barang * harga_barang)");
+                txTotal.setText(sum);
+            }
+        } catch (Exception e) {
+            System.out.println("terjadi kesalahan");
+        }
+        
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -78,7 +95,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txTotal = new javax.swing.JTextField();
         btnTambah = new javax.swing.JButton();
         btnKembali = new javax.swing.JButton();
 
@@ -106,6 +123,8 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Total :");
+
+        txTotal.setEditable(false);
 
         btnTambah.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnTambah.setText("Tambah");
@@ -139,7 +158,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +177,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnKembali))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +246,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     private javax.swing.JTable detailTable;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txTotal;
     public javax.swing.JTextField txtDetail;
     // End of variables declaration//GEN-END:variables
 }
