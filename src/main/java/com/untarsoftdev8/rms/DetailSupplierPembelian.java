@@ -87,6 +87,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         }
         
     }
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -246,7 +247,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     private javax.swing.JTable detailTable;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txTotal;
+    public static javax.swing.JTextField txTotal;
     public javax.swing.JTextField txtDetail;
     // End of variables declaration//GEN-END:variables
 }

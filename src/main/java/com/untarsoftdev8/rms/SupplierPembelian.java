@@ -4,6 +4,7 @@
  */
 package com.untarsoftdev8.rms;
 
+import static com.untarsoftdev8.rms.DetailSupplierPembelian.txTotal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,7 +80,6 @@ public class SupplierPembelian extends javax.swing.JFrame {
             System.out.println("terjadi kesalahan");
         }
     }
-    
     public void clear(){
         txtID.setText(String.valueOf(id_pembelian+1));
         txtTanggal.setDate(null);
@@ -132,11 +132,27 @@ public class SupplierPembelian extends javax.swing.JFrame {
        detail.txtDetail.setText(" ~ ID Pembelian : " + tempid + " ~ Bos : " + tempbos + " ~ Tanggal : " + tempdate );
        detail.id_pembelian=tempid;
        
+       
        detail.setVisible(true);
        detail.pack();
        dispose();
    }
     
+     public void saveTotal(){
+        try {
+            String total = txTotal.getText();
+            int baris = pembelianTable.getSelectedRow();
+            String idBrg = model.getValueAt(baris, 0).toString();
+            
+            Connection c = koneksi.getKoneksi();
+            PreparedStatement ps;
+            String sql = "Update pembelian set total='"+total+"' where id_pembelian = '"+idBrg+"' ";
+            ps=c.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("terjadi kesalahan");
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -641,6 +657,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
             System.out.println("update error");
         }finally{
             loadData();
+            saveTotal();
         }
     }//GEN-LAST:event_btnInputActionPerformed
     
