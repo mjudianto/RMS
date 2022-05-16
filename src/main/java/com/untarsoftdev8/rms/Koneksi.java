@@ -41,7 +41,7 @@ public class Koneksi {
             String sqlCreate = "CREATE TABLE IF NOT EXISTS supplier "
                     + "  (id_bos           INT PRIMARY KEY AUTO_INCREMENT,"
                     + "   nama_bos         VARCHAR(20) NOT NULL,"
-                    + "   no_telp          VARCHAR(12) NOT NULL) AUTO_INCREMENT=300000";
+                    + "   no_telp          VARCHAR(12) NOT NULL)";
             
             Statement stmt;
         try {
@@ -55,7 +55,7 @@ public class Koneksi {
     private static void createTableStok() {
         
             String sqlCreate = "CREATE TABLE IF NOT EXISTS stok "
-                    + "  (id_barang           VARCHAR(6) PRIMARY KEY,"
+                    + "  (id_barang           INT PRIMARY KEY,"
                     + "   nama_barang         VARCHAR(20) NOT NULL,"
                     + "   tipe_barang         VARCHAR(20) NOT NULL,"
                     + "   merek_barang        VARCHAR(20) NOT NULL,"
@@ -76,7 +76,8 @@ public class Koneksi {
     private static void createTableDetailPembelian() {
         
             String sqlCreate = "CREATE TABLE IF NOT EXISTS detailpembelian "
-                    + "  (id_barang           INT PRIMARY KEY ,"
+                    + "  (id_detail           INT PRIMARY KEY AUTO_INCREMENT,"
+                    + "   id_barang           INT ,"
                     + "   nama_barang         VARCHAR(20) NOT NULL,"
                     + "   tipe_barang         VARCHAR(20) NOT NULL,"
                     + "   merek_barang        VARCHAR(20) NOT NULL,"
@@ -84,6 +85,7 @@ public class Koneksi {
                     + "   harga_barang        DOUBLE NOT NULL,"
                     + "   id_pembelian        INT NOT NULL,"
                     + "   FOREIGN KEY (id_pembelian) REFERENCES pembelian(id_pembelian))";
+                    //+ "   FOREIGN KEY (id_barang) REFERENCES stok(id_barang))";
                     
             
             Statement stmt;
@@ -121,7 +123,7 @@ public class Koneksi {
                     + "   tanggal          DATE NOT NULL,"
                     + "   total            DOUBLE NOT NULL,"
                     + "   lunas            VARCHAR(1) NOT NULL,"
-                    + "   nama_supplier    VARCHAR(20) NOT NULL) AUTO_INCREMENT=100000";
+                    + "   nama_supplier    VARCHAR(20) NOT NULL)";
             
             Statement stmt;
         try {
