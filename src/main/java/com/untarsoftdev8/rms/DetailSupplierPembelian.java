@@ -79,8 +79,9 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         try {
             Connection c = koneksi.getKoneksi();
             PreparedStatement ps;
-            String sql = " SELECT sum(stok_barang * harga_barang) FROM detailpembelian ";
+            String sql = " SELECT sum(stok_barang * harga_barang) FROM detailpembelian where id_pembelian=? ";
             ps=c.prepareStatement(sql);
+            ps.setInt(1,id_pembelian);
             ResultSet r = ps.executeQuery();
             if(r.next()){
                 String sum=r.getString("sum(stok_barang * harga_barang)");
@@ -88,6 +89,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
                 totalpembelian=Double.parseDouble(sum);
                 System.out.println("Total pembelian: "+totalpembelian);
             }
+            r.close();
         } catch (Exception e) {
             System.out.println("kesalahan gettotal: "+e);
         }
@@ -207,22 +209,57 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         tambah.temppembelian = id_pembelian;
         tambah.setVisible(true);
     }//GEN-LAST:event_btnTambahActionPerformed
-
+    String tempnamasup;
+    private void getNamaSupplier(){
+        try{
+            Connection c = koneksi.getKoneksi();
+            String sql="SELECT nama_supplier FROM pembelian WHERE id_pembelian=?";
+            PreparedStatement p=c.prepareStatement(sql);
+            p.setInt(1, id_pembelian);
+            ResultSet r = p.executeQuery();
+            if(r.next()){
+                tempnamasup=r.getString("nama_supplier");
+                System.out.println("Nama Supplier: "+tempnamasup);
+            }
+            r.close();
+            p.close();
+        }
+        catch (Exception e) {
+            System.out.println("get supplier"+e);
+        }
+    }
+    private void insertStok(){
+        try{
+            Connection c = koneksi.getKoneksi();
+            String sql="INSERT INTO stok(id_barang,nama_barang,tipe_barang,merek_barang,stok_barang,harga_barang,nama_supplier) "
+               +"SELECT id_barang,nama_barang,tipe_barang,merek_barang,stok_barang,harga_barang,? FROM detailpembelian where id_pembelian=?";
+            PreparedStatement p=c.prepareStatement(sql);
+            p.setString(1,tempnamasup);
+            p.setInt(2,id_pembelian);
+            p.executeUpdate();
+            p.close();
+        }
+        catch (Exception e) {
+            System.out.println("insert stok"+e);
+        }
+            
+    }
+    
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
         this.setVisible(false);
         try {
             Connection c = koneksi.getKoneksi();
             String sql = "UPDATE pembelian SET total=? WHERE id_pembelian = ?;";
-            
             PreparedStatement p = c.prepareStatement(sql);
             p=c.prepareStatement(sql);
             p.setDouble(1, totalpembelian);
             p.setInt(2, id_pembelian);
-            
             p.executeUpdate();
             p.close();
+            getNamaSupplier();
+            insertStok();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("btn kembali "+e);
         }finally{
             new SupplierPembelian().setVisible(true);
         }                  
