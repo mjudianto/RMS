@@ -604,8 +604,16 @@ public class SupplierPembelian extends javax.swing.JFrame {
                     int idpembelian = (int) pembelianTable.getValueAt(baris, 0);
                     try {
                     Connection c = koneksi.getKoneksi();
+                    String sql2 = "DELETE FROM stok WHERE id_pembelian=?";
+                    String sql1 = "DELETE FROM detailpembelian WHERE id_pembelian=?";
                     String sql = "DELETE FROM pembelian WHERE id_pembelian = ?";
-                    PreparedStatement p = c.prepareStatement(sql);
+                    PreparedStatement p = c.prepareStatement(sql2);
+                    p.setInt(1, idpembelian);
+                    p.executeUpdate();
+                    p = c.prepareStatement(sql1);
+                    p.setInt(1, idpembelian);
+                    p.executeUpdate();
+                    p = c.prepareStatement(sql);
                     p.setInt(1, idpembelian);
                     p.executeUpdate();
                     p.close();

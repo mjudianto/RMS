@@ -234,11 +234,12 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     private void insertStok(){
         try{
             Connection c = koneksi.getKoneksi();
-            String sql="INSERT INTO stok(id_barang,nama_barang,tipe_barang,merek_barang,stok_barang,harga_barang,nama_supplier) "
-               +"SELECT id_barang,nama_barang,tipe_barang,merek_barang,stok_barang,harga_barang,? FROM detailpembelian where id_pembelian=?";
+            String sql="INSERT INTO stok(id_barang,nama_barang,tipe_barang,merek_barang,stok_barang,harga_barang,nama_supplier,id_pembelian) "
+               +"SELECT id_barang,nama_barang,tipe_barang,merek_barang,stok_barang,harga_barang,?,? FROM detailpembelian where id_pembelian=?";
             PreparedStatement p=c.prepareStatement(sql);
             p.setString(1,tempnamasup);
             p.setInt(2,id_pembelian);
+            p.setInt(3,id_pembelian);
             p.executeUpdate();
             p.close();
         }

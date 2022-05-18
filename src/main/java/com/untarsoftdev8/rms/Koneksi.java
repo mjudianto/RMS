@@ -61,7 +61,9 @@ public class Koneksi {
                     + "   merek_barang        VARCHAR(20) NOT NULL,"
                     + "   stok_barang         INT NOT NULL,"
                     + "   harga_barang        DOUBLE NOT NULL,"
-                    + "   nama_supplier       VARCHAR(20) NOT NULL)";
+                    + "   nama_supplier       VARCHAR(20) NOT NULL,"
+                    + "   id_pembelian        INT,"
+                    + "   FOREIGN KEY (id_pembelian) REFERENCES pembelian(id_pembelian))";
             
             Statement stmt;
         try {
