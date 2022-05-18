@@ -19,6 +19,7 @@ import javax.swing.table.TableModel;
  */
 public class InputBarangPenjualan extends javax.swing.JFrame {
     Koneksi koneksi = new Koneksi();
+    DefaultTableModel tb = new DefaultTableModel();
     /**
      * Creates new form InputBarangPenjualan
      */
@@ -28,7 +29,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
     }
 
     public void showData(){
-    DefaultTableModel tb = new DefaultTableModel();
+    
     
     tb.addColumn("ID");
     tb.addColumn("NAMA");
@@ -61,6 +62,34 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
 }
+    
+    private void findData(String key){
+        try{
+            Object[] judul_kolom = {"id_barang","nama_barang","tipe_barang","merek_barang","stok_barang","harga_barang","nama_supplier"};
+            tb = new DefaultTableModel(null,judul_kolom);
+            tabelBarang.setModel(tb);
+            
+            Connection c = koneksi.getKoneksi();
+            Statement s=c.createStatement();
+            tb.getDataVector().removeAllElements();
+            
+            ResultSet rs =s.executeQuery("Select * from stok where nama_barang LIKE '%"+key+"%'");
+            while(rs.next()){
+                Object[] data={
+                rs.getString("id_barang"),
+                rs.getString("nama_barang"),
+                rs.getString("tipe_barang"),
+                rs.getString("merek_barang"),
+                rs.getString("stok_barang"),
+                rs.getString("harga_barang"),
+                rs.getString("nama_supplier"),
+                };
+                tb.addRow(data);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,7 +104,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelBarang = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        cariBarang = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,9 +127,14 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Cari Barang :");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        cariBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                cariBarangActionPerformed(evt);
+            }
+        });
+        cariBarang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cariBarangKeyReleased(evt);
             }
         });
 
@@ -114,7 +148,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
@@ -127,7 +161,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                 .addContainerGap())
@@ -136,9 +170,21 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void cariBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cariBarangActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_cariBarangActionPerformed
+
+    private void cariBarangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariBarangKeyReleased
+        // TODO add your handling code here:
+        String key=cariBarang.getText();
+        System.out.println(key);
+        
+        if(key!=""){
+            findData(key);
+        }else{
+            showData();
+        }
+    }//GEN-LAST:event_cariBarangKeyReleased
 
     /**
      * @param args the command line arguments
@@ -176,10 +222,10 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cariBarang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabelBarang;
     // End of variables declaration//GEN-END:variables
 }
