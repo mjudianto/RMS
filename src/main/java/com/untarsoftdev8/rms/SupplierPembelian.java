@@ -143,7 +143,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
         try {
             String total = txTotal.getText();
             int baris = pembelianTable.getSelectedRow();
-            String idBrg = model.getValueAt(baris, 0).toString();
+            int idBrg =(int) model.getValueAt(baris, 0);
             
             Connection c = koneksi.getKoneksi();
             PreparedStatement ps;
@@ -611,7 +611,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
                     p.close();
                     JOptionPane.showMessageDialog(null, "Data Terhapus");
                 } catch (Exception e) {
-                    System.out.println("Terjadi Kesalahan");
+                    System.out.println("Error Hapus : "+e);
                 }finally{
                     loadData();
                 }

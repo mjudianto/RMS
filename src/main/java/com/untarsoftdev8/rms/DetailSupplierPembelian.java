@@ -20,7 +20,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     Koneksi koneksi = new Koneksi();
     public static int id_pembelian;
     private DefaultTableModel model;
-    public double totalpembelian;
+    public double totalpembelian=0.0;
     public DetailSupplierPembelian(int tempid) {
         initComponents();
         id_pembelian=tempid;
@@ -34,9 +34,9 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         model.addColumn("stok_barang");
         model.addColumn("harga_barang");
         model.addColumn("id_pembelian");
-        
-        loadData();
         getTotal();
+        loadData();
+        
     }
     
     
@@ -84,10 +84,13 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
             ps.setInt(1,id_pembelian);
             ResultSet r = ps.executeQuery();
             if(r.next()){
-                String sum=r.getString("sum(stok_barang * harga_barang)");
-                txTotal.setText(sum);
-                totalpembelian=Double.parseDouble(sum);
+                double sum=r.getDouble("sum(stok_barang * harga_barang)");
+                txTotal.setText(Double.toString(sum));
+                totalpembelian=sum;
                 System.out.println("Total pembelian: "+totalpembelian);
+            }
+            else{
+                totalpembelian=0.0;
             }
             r.close();
         } catch (Exception e) {
@@ -247,11 +250,13 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
         this.setVisible(false);
+        getTotal();
         try {
             Connection c = koneksi.getKoneksi();
             String sql = "UPDATE pembelian SET total=? WHERE id_pembelian = ?;";
             PreparedStatement p = c.prepareStatement(sql);
             p=c.prepareStatement(sql);
+            System.out.println("total pembelian: "+ totalpembelian);
             p.setDouble(1, totalpembelian);
             p.setInt(2, id_pembelian);
             p.executeUpdate();
@@ -277,22 +282,27 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         }
         
         int id = (int) model.getValueAt(i, 0);
-        
+        int tempbarang = (int) model.getValueAt(i,1);
         int pernyataan = JOptionPane.showConfirmDialog(null, "Yakin Data Akan Dihapus","Konfirmasi", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (pernyataan== JOptionPane.OK_OPTION) {
             try {
                 Connection c = koneksi.getKoneksi();
+                String sql1 = "DELETE FROM stok WHERE id_barang = ?";
                 String sql = "DELETE FROM detailpembelian WHERE id_detail = ?";
-                PreparedStatement p = c.prepareStatement(sql);
+                PreparedStatement p = c.prepareStatement(sql1);
+                p.setInt(1, tempbarang);
+                p.executeUpdate();
+                p = c.prepareStatement(sql);
                 p.setInt(1, id);
                 p.executeUpdate();
                 p.close();
+                getTotal();
                 JOptionPane.showMessageDialog(null, "Data Terhapus");
             } catch (Exception e) {
                 System.out.println("Terjadi Kesalahan");
             }finally{
+                
                 loadData();
-                getTotal();
             }
         }
         if (pernyataan== JOptionPane.CANCEL_OPTION) {
