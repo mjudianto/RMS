@@ -4,18 +4,63 @@
  */
 package com.untarsoftdev8.rms;
 
+import static com.untarsoftdev8.rms.DetailSupplierPembelian.id_pembelian;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author Venny
  */
 public class InputBarangPenjualan extends javax.swing.JFrame {
-
+    Koneksi koneksi = new Koneksi();
     /**
      * Creates new form InputBarangPenjualan
      */
     public InputBarangPenjualan() {
         initComponents();
+        showData();
     }
+
+    public void showData(){
+    DefaultTableModel tb = new DefaultTableModel();
+    
+    tb.addColumn("ID");
+    tb.addColumn("NAMA");
+    tb.addColumn("TIPE");
+    tb.addColumn("MEREK");
+    tb.addColumn("JUMLAH");
+    tb.addColumn("HARGA");
+    tb.addColumn("BOS");
+    
+    tabelBarang.setModel(tb);
+    try{
+            Connection c = koneksi.getKoneksi();
+            String sql="Select * from stok" ;
+            Statement s=c.prepareStatement(sql);
+            ResultSet rs=s.executeQuery(sql);
+          
+            while(rs.next()){
+                tb.addRow(new Object[]{
+                rs.getString("id_barang"),
+                rs.getString("nama_barang"),
+                rs.getString("tipe_barang"),
+                rs.getString("merek_barang"),
+                rs.getString("stok_barang"),
+                rs.getString("harga_barang"),
+                rs.getString("nama_supplier"),
+            });
+            }
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,7 +73,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelBarang = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
 
@@ -37,7 +82,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("DAFTAR BARANG");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelBarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -48,7 +93,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
                 "ID", "NAMA", "TIPE", "MEREK", "JUMLAH", "HARGA", "BOS"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelBarang);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Cari Barang :");
@@ -134,7 +179,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tabelBarang;
     // End of variables declaration//GEN-END:variables
 }
