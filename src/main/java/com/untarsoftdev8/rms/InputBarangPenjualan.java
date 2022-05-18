@@ -25,7 +25,6 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
      */
     public InputBarangPenjualan() {
         initComponents();
-        showData();
     }
 
     public void showData(){
