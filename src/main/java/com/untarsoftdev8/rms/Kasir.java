@@ -22,7 +22,9 @@ public class Kasir extends javax.swing.JFrame {
     
         initComponents();
         String date = getDate();
+        String id = getAlphaNumericString();
         Tanggal.setText(date);
+        ID.setText(id);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -411,6 +413,33 @@ public class Kasir extends javax.swing.JFrame {
         String date = (String) dtf.format(now);
         
         return date;
+    }
+    
+    public String getAlphaNumericString()
+    {
+        int n = 5;
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                    + "0123456789"
+                                    + "abcdefghijklmnopqrstuvxyz";
+  
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
+  
+        for (int i = 0; i < n; i++) {
+  
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                = (int)(AlphaNumericString.length()
+                        * Math.random());
+  
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                          .charAt(index));
+        }
+  
+        return sb.toString();
     }
     /**
      * @param args the command line arguments
