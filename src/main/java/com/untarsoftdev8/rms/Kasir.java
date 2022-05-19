@@ -33,6 +33,26 @@ public class Kasir extends javax.swing.JFrame {
         Tanggal.setText(date);
         ID.setText(id);
     }
+    
+    public Kasir(Object[] obj) {
+        initComponents();
+        String date = getDate();
+        String id = getAlphaNumericString();
+        Tanggal.setText(date);
+        ID.setText(id);
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("NAMA");
+        model.addColumn("TIPE");
+        model.addColumn("MEREK");
+        model.addColumn("JUMLAH");
+        model.addColumn("HARGA");
+        model.addColumn("BOS");
+        tableKasir.setModel(model);
+        model.addRow(obj);
+ 
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,7 +79,7 @@ public class Kasir extends javax.swing.JFrame {
         ID = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable6 = new javax.swing.JTable();
+        tableKasir = new javax.swing.JTable();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         TotalUnit = new javax.swing.JTextField();
@@ -211,7 +231,7 @@ public class Kasir extends javax.swing.JFrame {
 
         jLabel30.setText("TANGGAL :");
 
-        jTable6.setModel(new javax.swing.table.DefaultTableModel(
+        tableKasir.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -219,7 +239,7 @@ public class Kasir extends javax.swing.JFrame {
                 "ID", "Nama", "Tipe", "Merek", "Harga", "Unit", "Total"
             }
         ));
-        jScrollPane6.setViewportView(jTable6);
+        jScrollPane6.setViewportView(tableKasir);
 
         jLabel31.setText("Total Unit");
 
@@ -516,7 +536,7 @@ public class Kasir extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable jTable6;
     private javax.swing.JTextField jTextField18;
+    public javax.swing.JTable tableKasir;
     // End of variables declaration//GEN-END:variables
 }
