@@ -32,6 +32,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
     String bos;
     int jumlahstok;
     double harga;
+    int colcount;
     
     public DefaultComboBoxModel retrieve()
     {
@@ -175,6 +176,8 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+                                          
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -207,6 +210,11 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
                 "ID", "NAMA", "TIPE", "MEREK", "JUMLAH", "HARGA", "BOS"
             }
         ));
+        tabelBarang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelBarangMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelBarang);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -270,6 +278,28 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
             showData();
         }
     }//GEN-LAST:event_cariBarangKeyReleased
+        
+   Object[] o = new Object[7];
+    private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBarangMouseClicked
+        int baris = tabelBarang.getSelectedRow();
+        for (int i=0 ; i<tabelBarang.getColumnCount() ; i++){
+            String data = (String) tabelBarang.getValueAt(baris, i);
+            o [i] = data;
+        }
+        String pilihan[] = {"INPUT", "BATAL"};
+             int pilih = JOptionPane.showOptionDialog(null, "INPUT ATAU BATAL?", "KONFIRMASI", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, pilihan, pilihan[0]);
+             switch (pilih) {
+                case JOptionPane.YES_OPTION://INPUT
+                    Kasir kasir = new Kasir(o);
+                    kasir.setVisible(true);
+                break;
+                
+                case JOptionPane.NO_OPTION://BATAL
+                    loadData();
+                    
+                break;
+                }    
+    }//GEN-LAST:event_tabelBarangMouseClicked
 
     /**
      * @param args the command line arguments
