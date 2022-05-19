@@ -111,7 +111,7 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
         btnTambah = new javax.swing.JButton();
         btnKembali = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         txtDetail.setEditable(false);
         txtDetail.addActionListener(new java.awt.event.ActionListener() {
