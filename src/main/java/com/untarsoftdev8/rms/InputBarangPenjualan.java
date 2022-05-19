@@ -8,7 +8,9 @@ import static com.untarsoftdev8.rms.DetailSupplierPembelian.id_pembelian;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -23,8 +25,92 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
     /**
      * Creates new form InputBarangPenjualan
      */
+    String id_barang;
+    String nama;
+    String tipe;
+    String merek;
+    String bos;
+    int jumlahstok;
+    double harga;
+    
+    public DefaultComboBoxModel retrieve()
+    {
+        DefaultComboBoxModel dm=new DefaultComboBoxModel();
+
+        //SQL
+        String sql="SELECT nama_bos FROM supplier";
+
+        try
+        {
+            Connection c=koneksi.getKoneksi();
+
+            //STATEMENT
+            Statement s=c.prepareStatement(sql);
+            ResultSet rs=s.executeQuery(sql);
+
+            //LOOP THRU GETTING ALL VALUES
+            while(rs.next())
+            {
+                //GET VALUES
+                String name=rs.getString(1);
+
+                dm.addElement(name);
+            }
+
+            return dm;
+
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+             return null;
+        }
+
+    }
+    
+    private DefaultTableModel model;
+    
+    public void loadData(){
+        model.getDataVector().removeAllElements();
+        
+        model.fireTableDataChanged();
+        
+        try {
+            Connection c = koneksi.getKoneksi();
+            Statement s = c.createStatement();
+            
+            String sql = "SELECT * FROM stok";
+            ResultSet r = s.executeQuery(sql);
+            
+            while (r.next()) {
+                Object[] o = new Object[7];
+                o [0] = r.getString("id_barang");
+                o [1] = r.getString("nama_barang");
+                o [2] = r.getString("tipe_barang");
+                o [3] = r.getString("merek_barang");
+                o [4] = r.getString("stok_barang");
+                o [5] = r.getString("harga_barang");
+                o [6] = r.getString("nama_supplier");
+                
+                model.addRow(o);
+            }
+            r.close();
+            s.close();
+        } catch (Exception e) {
+            System.out.println("terjadi kesalahan");
+        }
+    }
+    
     public InputBarangPenjualan() {
         initComponents();
+        model = new DefaultTableModel();
+        tabelBarang.setModel(model);
+        model.addColumn("ID");
+        model.addColumn("NAMA");
+        model.addColumn("TIPE");
+        model.addColumn("MEREK");
+        model.addColumn("JUMLAH");
+        model.addColumn("HARGA");
+        model.addColumn("BOS");
+        loadData();
     }
 
     public void showData(){
