@@ -194,6 +194,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         tabelBarang = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         cariBarang = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -211,11 +212,6 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
                 "ID", "NAMA", "TIPE", "MEREK", "JUMLAH", "HARGA", "BOS"
             }
         ));
-        tabelBarang.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelBarangMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tabelBarang);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -232,6 +228,13 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("INPUT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -239,13 +242,16 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -257,8 +263,10 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(cariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         pack();
@@ -280,36 +288,15 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cariBarangKeyReleased
         
-   Object[] o = new Object[7];
-    private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {                                         
-        int baris = tabelBarang.getSelectedRow();
-        for (int i=0 ; i<tabelBarang.getColumnCount() ; i++){
-            String data = (String) tabelBarang.getValueAt(baris, i);
-            o [i] = data;
-        }
-        String pilihan[] = {"INPUT", "BATAL"};
-             int pilih = JOptionPane.showOptionDialog(null, "INPUT ATAU BATAL?", "KONFIRMASI", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, pilihan, pilihan[0]);
-             switch (pilih) {
-                case JOptionPane.YES_OPTION://INPUT
-                    Kasir kasir = new Kasir(o);
-                    kasir.setVisible(true);
-                break;
-                
-                case JOptionPane.NO_OPTION://BATAL
-                    loadData();
-                    
-                break;
-                }    
-    }                                        
-
     private void tabelBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelBarangKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_tabelBarangKeyPressed
 
-    private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBarangMouseClicked
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tabelBarangMouseClicked
-
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    Object[] o = new Object[7];
     /**
      * @param args the command line arguments
      */
@@ -347,6 +334,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cariBarang;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
