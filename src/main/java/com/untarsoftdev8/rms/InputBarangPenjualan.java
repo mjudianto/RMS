@@ -22,6 +22,7 @@ import javax.swing.table.TableModel;
 public class InputBarangPenjualan extends javax.swing.JFrame {
     Koneksi koneksi = new Koneksi();
     DefaultTableModel tb = new DefaultTableModel();
+    Kasir tbl_barang = new Kasir();
     /**
      * Creates new form InputBarangPenjualan
      */
@@ -280,7 +281,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
     }//GEN-LAST:event_cariBarangKeyReleased
         
    Object[] o = new Object[7];
-    private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBarangMouseClicked
+    private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {                                         
         int baris = tabelBarang.getSelectedRow();
         for (int i=0 ; i<tabelBarang.getColumnCount() ; i++){
             String data = (String) tabelBarang.getValueAt(baris, i);
@@ -299,6 +300,14 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
                     
                 break;
                 }    
+    }                                        
+
+    private void tabelBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelBarangKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelBarangKeyPressed
+
+    private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBarangMouseClicked
+        // TODO add your handling code here:
     }//GEN-LAST:event_tabelBarangMouseClicked
 
     /**
