@@ -49,6 +49,11 @@ public class Kasir extends javax.swing.JFrame {
         model.addColumn("HARGA");
         model.addColumn("TOTAL");
         tableKasir.setModel(model);
+        if (obj[4] != "" && obj[5] != ""){
+            obj[6] = getTotal((float)obj[4], (float)obj[5]);
+        } else {
+            obj[6] = getTotal(2, 3);
+        }
         model.addRow(obj);
  
         
@@ -441,6 +446,10 @@ public class Kasir extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2MouseClicked
+    
+    public float getTotal(float a, float b){
+        return a*b;
+    }
     
     public String getDate(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
