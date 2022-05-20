@@ -47,7 +47,7 @@ public class Kasir extends javax.swing.JFrame {
         model.addColumn("MEREK");
         model.addColumn("JUMLAH");
         model.addColumn("HARGA");
-        model.addColumn("BOS");
+        model.addColumn("TOTAL");
         tableKasir.setModel(model);
         model.addRow(obj);
  
