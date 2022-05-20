@@ -284,7 +284,11 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         int baris = tabelBarang.getSelectedRow();
         for (int i=0 ; i<tabelBarang.getColumnCount() ; i++){
             String data = (String) tabelBarang.getValueAt(baris, i);
-            o [i] = data;
+            if (i>=4){
+                o[i] = "";
+            } else {
+                o [i] = data;
+            }
         }
         String pilihan[] = {"INPUT", "BATAL"};
              int pilih = JOptionPane.showOptionDialog(null, "INPUT ATAU BATAL?", "KONFIRMASI", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, pilihan, pilihan[0]);
