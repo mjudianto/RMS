@@ -288,15 +288,38 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cariBarangKeyReleased
         
-    private void tabelBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelBarangKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelBarangKeyPressed
+   Object[] o = new Object[7];
+    private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBarangMouseClicked
+        int baris = tabelBarang.getSelectedRow();
+        for (int i=0 ; i<tabelBarang.getColumnCount() ; i++){
+            String data = (String) tabelBarang.getValueAt(baris, i);
+            if (i>=4){
+                o[i] = "";
+            } else {
+                o [i] = data;
+            }
+        }
+        String pilihan[] = {"INPUT", "BATAL"};
+             int pilih = JOptionPane.showOptionDialog(null, "INPUT ATAU BATAL?", "KONFIRMASI", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, pilihan, pilihan[0]);
+             switch (pilih) {
+                case JOptionPane.YES_OPTION://INPUT
+                    Kasir kasir = new Kasir();
+                    DefaultTableModel tabelkasir = (DefaultTableModel) kasir.tableKasir.getModel();
+                    tabelkasir.addRow(o);
+                    kasir.setVisible(true);
+                break;
+                
+                case JOptionPane.NO_OPTION://BATAL
+                    loadData();
+                    
+                break;
+                }    
+    }//GEN-LAST:event_tabelBarangMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-    Object[] o = new Object[7];
+
     /**
      * @param args the command line arguments
      */
