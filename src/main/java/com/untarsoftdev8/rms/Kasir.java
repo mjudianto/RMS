@@ -32,6 +32,8 @@ public class Kasir extends javax.swing.JFrame {
         String id = getAlphaNumericString();
         Tanggal.setText(date);
         ID.setText(id);
+        getLast();
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,7 +65,7 @@ public class Kasir extends javax.swing.JFrame {
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         TotalUnit = new javax.swing.JTextField();
-        jTextField18 = new javax.swing.JTextField();
+        Total = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -238,15 +240,17 @@ public class Kasir extends javax.swing.JFrame {
 
         jLabel32.setText("Total Harga");
 
+        TotalUnit.setEditable(false);
         TotalUnit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TotalUnitjTextField2ActionPerformed(evt);
             }
         });
 
-        jTextField18.addActionListener(new java.awt.event.ActionListener() {
+        Total.setEditable(false);
+        Total.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField18ActionPerformed(evt);
+                TotalActionPerformed(evt);
             }
         });
 
@@ -305,7 +309,7 @@ public class Kasir extends javax.swing.JFrame {
                                             .addComponent(jLabel31))
                                         .addGap(28, 28, 28)
                                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(Total, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(TotalUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -346,7 +350,7 @@ public class Kasir extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel32)
-                    .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -418,9 +422,9 @@ public class Kasir extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField18ActionPerformed
+    private void TotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TotalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField18ActionPerformed
+    }//GEN-LAST:event_TotalActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -438,6 +442,19 @@ public class Kasir extends javax.swing.JFrame {
     private void tableKasirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableKasirMouseExited
         getTotal();
     }//GEN-LAST:event_tableKasirMouseExited
+    
+    double totalUnit = 0;
+    double totalHarga = 0;
+    public void getLast(){
+
+        for (int i=0 ; i<tableKasir.getRowCount() ; i++){
+            totalUnit += (double)tableKasir.getValueAt(i, 5);
+            totalHarga += (double)tableKasir.getValueAt(i, 6);
+        }
+        
+        TotalUnit.setText(Double.toString(totalUnit));
+        Total.setText(Double.toString(totalHarga));
+    }
     
     public void getTotal(){
         int index = tableKasir.getSelectedRow();
@@ -519,6 +536,7 @@ public class Kasir extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ID;
     private javax.swing.JTextField Tanggal;
+    private javax.swing.JTextField Total;
     private javax.swing.JTextField TotalUnit;
     private javax.swing.JButton buttonCariBarang;
     private javax.swing.JButton buttonHome;
@@ -541,7 +559,6 @@ public class Kasir extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTextField jTextField18;
     public javax.swing.JTable tableKasir;
     // End of variables declaration//GEN-END:variables
 }

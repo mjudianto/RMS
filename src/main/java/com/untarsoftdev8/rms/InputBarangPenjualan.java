@@ -304,7 +304,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         for (int i=0 ; i<indeks.length ; i++){
             for (int j=0 ; j<modelInput.getColumnCount() ; j++){
                 if (j>3){
-                    row[j] = 0;
+                    row[j] = 0.00;
                 } else {
                     row[j] = modelInput.getValueAt(indeks[i], j);
                 }
