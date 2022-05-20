@@ -294,7 +294,9 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
              int pilih = JOptionPane.showOptionDialog(null, "INPUT ATAU BATAL?", "KONFIRMASI", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, pilihan, pilihan[0]);
              switch (pilih) {
                 case JOptionPane.YES_OPTION://INPUT
-                    Kasir kasir = new Kasir(o);
+                    Kasir kasir = new Kasir();
+                    DefaultTableModel tabelkasir = (DefaultTableModel) kasir.tableKasir.getModel();
+                    tabelkasir.addRow(o);
                     kasir.setVisible(true);
                 break;
                 
