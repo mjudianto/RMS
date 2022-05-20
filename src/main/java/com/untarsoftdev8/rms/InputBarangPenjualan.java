@@ -300,10 +300,14 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         Kasir kasir = new Kasir();
         DefaultTableModel tabelkasir = (DefaultTableModel) kasir.tableKasir.getModel();
         
-        Object[] row = new Object[5];
+        Object[] row = new Object[7];
         for (int i=0 ; i<indeks.length ; i++){
-            for (int j=0 ; j<4 ; j++){
-                row[j] = modelInput.getValueAt(indeks[i], j);
+            for (int j=0 ; j<modelInput.getColumnCount() ; j++){
+                if (j>3){
+                    row[j] = 0;
+                } else {
+                    row[j] = modelInput.getValueAt(indeks[i], j);
+                }
             }
             tabelkasir.addRow(row);
         }

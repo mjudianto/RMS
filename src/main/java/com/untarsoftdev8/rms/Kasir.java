@@ -33,31 +33,6 @@ public class Kasir extends javax.swing.JFrame {
         Tanggal.setText(date);
         ID.setText(id);
     }
-    
-    public Kasir(Object[] obj) {
-        initComponents();
-        String date = getDate();
-        String id = getAlphaNumericString();
-        Tanggal.setText(date);
-        ID.setText(id);
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID");
-        model.addColumn("NAMA");
-        model.addColumn("TIPE");
-        model.addColumn("MEREK");
-        model.addColumn("JUMLAH");
-        model.addColumn("HARGA");
-        model.addColumn("TOTAL");
-        tableKasir.setModel(model);
-        if (obj[4] != "" && obj[5] != ""){
-            obj[6] = getTotal((float)obj[4], (float)obj[5]);
-        } else {
-            obj[6] = getTotal(2, 3);
-        }
-        model.addRow(obj);
- 
-        
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -181,7 +156,7 @@ public class Kasir extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,7 +218,20 @@ public class Kasir extends javax.swing.JFrame {
             new String [] {
                 "ID", "Nama", "Tipe", "Merek", "Harga", "Unit", "Total"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tableKasir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                tableKasirMouseExited(evt);
+            }
+        });
         jScrollPane6.setViewportView(tableKasir);
 
         jLabel31.setText("Total Unit");
@@ -446,9 +434,17 @@ public class Kasir extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void tableKasirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableKasirMouseExited
+        getTotal();
+    }//GEN-LAST:event_tableKasirMouseExited
     
-    public float getTotal(float a, float b){
-        return a*b;
+    public void getTotal(){
+        int index = tableKasir.getSelectedRow();
+        double harga = (double)tableKasir.getValueAt(index,4);
+        double unit = (double)tableKasir.getValueAt(index,5);
+        double total = harga*unit;
+        tableKasir.setValueAt(total, index, 6);
     }
     
     public String getDate(){
