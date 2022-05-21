@@ -39,7 +39,7 @@ public class Penjualan extends javax.swing.JFrame {
         getData();
     }
 
-    public void getData( ){
+public void getData(){
 
      model.getDataVector().removeAllElements();
         
@@ -64,7 +64,7 @@ public class Penjualan extends javax.swing.JFrame {
             r.close();
             s.close();
         } catch (Exception e) {
-            System.out.println("terjadi kesalahan");
+            JOptionPane.showMessageDialog(null, e);
         }
 }
  
@@ -438,24 +438,6 @@ public class Penjualan extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int id = 0 ;
-        String tampilan = "yyyy-MM-dd";
-        SimpleDateFormat fm = new SimpleDateFormat(tampilan);
-        String tanggal = String.valueOf(fm.format(txTanggal.getDate()));
-        try {
-            String sql = "INSERT INTO penjualan VALUES('"+id+"','" + tanggal + "','0','0')";
-            Connection conn = Koneksi.getKoneksi();
-            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-            pst.execute(sql);
-            JOptionPane.showMessageDialog(null, "Simpan tanggal berhasil");
-            
-        } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error" + e);
-        }finally{
-            getData();
-        }
- 
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

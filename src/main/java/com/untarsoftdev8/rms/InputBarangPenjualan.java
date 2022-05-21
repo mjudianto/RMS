@@ -311,7 +311,6 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
             }
             tabelkasir.addRow(row);
         }
-        
         kasir.show();
         dispose();
     }//GEN-LAST:event_inputActionPerformed

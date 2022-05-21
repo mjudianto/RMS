@@ -103,7 +103,7 @@ public class Koneksi {
     private static void createTablePenjualan() {
         
             String sqlCreate = "CREATE TABLE IF NOT EXISTS penjualan "
-                    + "  (id_penjualan    VARCHAR(10) PRIMARY KEY,"
+                    + "  (id_penjualan    INT PRIMARY KEY AUTO_INCREMENT,"
                     + "   tanggal         DATE NOT NULL,"
                     + "   pemasukan       DOUBLE NOT NULL,"
                     + "   keuntungan      DOUBLE NOT NULL)";
@@ -118,6 +118,30 @@ public class Koneksi {
             System.out.println(ex);
         }
     }
+    
+    private static void createTablePenjualanHarian() {
+        
+            String sqlCreate = "CREATE TABLE IF NOT EXISTS penjualanHarian "
+                    + "  (id_detail         INT PRIMARY KEY AUTO_INCREMENT,"
+                    + "   tipe_barang       VARCHAR(20) NOT NULL,"
+                    + "   merek_barang      VARCHAR(20) NOT NULL,"
+                    + "   jumlah_barang     DOUBLE NOT NULL,"
+                    + "   modal_barang      DOUBLE NOT NULL,"
+                    + "   harga_jual_barang DOUBLE NOT NULL,"
+                    + "   id_penjualan      INT NOT NULL,"
+                    + "   FOREIGN KEY (id_penjualan) REFERENCES penjualan(id_penjualan))";
+                    
+            
+            Statement stmt;
+        try {
+            stmt = koneksi.createStatement();
+            stmt.execute(sqlCreate);
+            System.out.println("tabel penjualanHarian Berhasil atau sudah ada");
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+    
     private static void createTablePembelian() {
             
             String sqlCreate = "CREATE TABLE IF NOT EXISTS pembelian "
@@ -171,6 +195,7 @@ public class Koneksi {
         createTablePenjualan();
         createTablePembelian();
         createTableDetailPembelian();
+        createTablePenjualanHarian();
         //alterSupplier();
         //deleteTable("detailpembelian");
     }
