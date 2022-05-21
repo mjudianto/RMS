@@ -32,8 +32,6 @@ public class Kasir extends javax.swing.JFrame {
         String id = getAlphaNumericString();
         Tanggal.setText(date);
         ID.setText(id);
-        getLast();
-        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -158,7 +156,7 @@ public class Kasir extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,6 +230,11 @@ public class Kasir extends javax.swing.JFrame {
         tableKasir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 tableKasirMouseExited(evt);
+            }
+        });
+        tableKasir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tableKasirKeyReleased(evt);
             }
         });
         jScrollPane6.setViewportView(tableKasir);
@@ -440,21 +443,13 @@ public class Kasir extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void tableKasirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableKasirMouseExited
-        getTotal();
-    }//GEN-LAST:event_tableKasirMouseExited
-    
-    double totalUnit = 0;
-    double totalHarga = 0;
-    public void getLast(){
-
-        for (int i=0 ; i<tableKasir.getRowCount() ; i++){
-            totalUnit += (double)tableKasir.getValueAt(i, 5);
-            totalHarga += (double)tableKasir.getValueAt(i, 6);
-        }
         
-        TotalUnit.setText(Double.toString(totalUnit));
-        Total.setText(Double.toString(totalHarga));
-    }
+    }//GEN-LAST:event_tableKasirMouseExited
+
+    private void tableKasirKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableKasirKeyReleased
+        // TODO add your handling code here:
+        getTotal();
+    }//GEN-LAST:event_tableKasirKeyReleased
     
     public void getTotal(){
         int index = tableKasir.getSelectedRow();
@@ -462,6 +457,17 @@ public class Kasir extends javax.swing.JFrame {
         double unit = (double)tableKasir.getValueAt(index,5);
         double total = harga*unit;
         tableKasir.setValueAt(total, index, 6);
+        
+        double totalUnit = 0;
+        double totalHarga = 0;
+    
+        for (int i=0 ; i<tableKasir.getRowCount() ; i++){
+            totalUnit += (double)tableKasir.getValueAt(i, 5);
+            totalHarga += (double)tableKasir.getValueAt(i, 6);
+        }
+        
+        TotalUnit.setText(Double.toString(totalUnit));
+        Total.setText(Double.toString(totalHarga));
     }
     
     public String getDate(){
