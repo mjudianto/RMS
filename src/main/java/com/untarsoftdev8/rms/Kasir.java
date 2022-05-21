@@ -239,9 +239,11 @@ public class Kasir extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(tableKasir);
 
-        jLabel31.setText("Total Unit");
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel31.setText("Total Unit :");
 
-        jLabel32.setText("Total Harga");
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel32.setText("Total Harga :");
 
         TotalUnit.setEditable(false);
         TotalUnit.addActionListener(new java.awt.event.ActionListener() {
@@ -307,13 +309,13 @@ public class Kasir extends javax.swing.JFrame {
                                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel32)
                                             .addComponent(jLabel31))
                                         .addGap(28, 28, 28)
-                                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Total, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(TotalUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(Total, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                            .addComponent(TotalUnit)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabel25)
