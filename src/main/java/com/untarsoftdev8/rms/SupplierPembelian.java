@@ -128,11 +128,9 @@ public class SupplierPembelian extends javax.swing.JFrame {
        tempid = (int) pembelianTable.getValueAt(baris,0);
        String tempdate = pembelianTable.getValueAt(baris,1).toString();
        String tempbos = pembelianTable.getValueAt(baris,4).toString();
-       System.out.println(tempid);
        DetailSupplierPembelian detail = new DetailSupplierPembelian(tempid);
        detail.txtDetail.setText(" ~ ID Pembelian : " + tempid + " ~ Bos : " + tempbos + " ~ Tanggal : " + tempdate );
        detail.id_pembelian=tempid;
-       
        
        detail.setVisible(true);
        detail.pack();

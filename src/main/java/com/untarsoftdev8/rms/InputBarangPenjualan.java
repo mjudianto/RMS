@@ -356,6 +356,6 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabelBarang;
+    public static javax.swing.JTable tabelBarang;
     // End of variables declaration//GEN-END:variables
 }

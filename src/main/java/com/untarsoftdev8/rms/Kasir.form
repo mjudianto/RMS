@@ -522,6 +522,9 @@
             <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
             <Property name="name" type="java.lang.String" value="jDateChooser" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

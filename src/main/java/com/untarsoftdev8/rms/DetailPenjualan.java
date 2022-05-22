@@ -4,20 +4,76 @@
  */
 package com.untarsoftdev8.rms;
 
+import static com.untarsoftdev8.rms.DetailSupplierPembelian.id_pembelian;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Venny
  */
 public class DetailPenjualan extends javax.swing.JFrame {
-
+     Koneksi koneksi = new Koneksi();
+     int idpenjualan;
+     private DefaultTableModel model;
     /**
      * Creates new form DetailPenjualan
      */
     public DetailPenjualan() {
         initComponents();
+        
+        DefaultTableModel model = new DefaultTableModel();
+        tabelDetailPenjualan.setModel(model);
+        model.addColumn("id_detail");
+        model.addColumn("nama_barang");
+        model.addColumn("tipe_barang");
+        model.addColumn("merek_barang");
+        model.addColumn("jumlah_barang");
+        model.addColumn("modal_barang");
+        model.addColumn("harga_barang");
+        model.addColumn("id_penjualan");
+        
     }
+    
+    public DetailPenjualan(int tempId) {
+        idpenjualan = tempId;
+        initComponents();
+        loadData();
+    }
+
+     public void loadData(){
+        try {
+            Connection c = koneksi.getKoneksi();
+            PreparedStatement ps;
+            String sql = "SELECT * FROM penjualanharian where id_penjualan=? ";
+            ps=c.prepareStatement(sql);
+            ps.setInt(1, idpenjualan);
+            ResultSet r = ps.executeQuery();
+            
+            while (r.next()) {
+                Object[] o = new Object[8];
+                o [1] = r.getString("id_detail");
+                o [2] = r.getString("nama_barang");
+                o [3] = r.getString("tipe_barang");
+                o [4] = r.getString("merek_barang");
+                o [5] = r.getDouble("jumlah_barang");
+                o [6] = r.getDouble("modal_barang");
+                o [7] = r.getDouble("harga_jual_barang");
+                o [8] = r.getInt("id_penjualan");
+                
+                model.addRow(o);
+            }
+            
+            r.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("load data "+e);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,7 +97,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         Keuntungan = new javax.swing.JTextPane();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelDetailPenjualan = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,7 +141,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
         Keuntungan.setBackground(new java.awt.Color(0, 0, 153));
         jScrollPane4.setViewportView(Keuntungan);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelDetailPenjualan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -93,12 +149,12 @@ public class DetailPenjualan extends javax.swing.JFrame {
                 "ID", "Nama Barang", "Tipe", "Merek", "Jumlah", "Modal", "Harga Jual"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelDetailPenjualan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tabelDetailPenjualanMouseClicked(evt);
             }
         });
-        jScrollPane5.setViewportView(jTable1);
+        jScrollPane5.setViewportView(tabelDetailPenjualan);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,13 +172,11 @@ public class DetailPenjualan extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(340, 340, 340)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -157,10 +211,10 @@ public class DetailPenjualan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void tabelDetailPenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelDetailPenjualanMouseClicked
         // TODO add your handling code here:
         JOptionPane.showConfirmDialog(null,"Apakah anda yakin ingin menghapus??","KONFIRMASI",JOptionPane.YES_NO_OPTION);
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_tabelDetailPenjualanMouseClicked
 
     /**
      * @param args the command line arguments
@@ -209,8 +263,8 @@ public class DetailPenjualan extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private static javax.swing.JTable jTable1;
     private javax.swing.JTextPane jTextPane1;
+    private static javax.swing.JTable tabelDetailPenjualan;
     public static javax.swing.JTextPane tanggal;
     // End of variables declaration//GEN-END:variables
 }

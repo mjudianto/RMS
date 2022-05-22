@@ -104,7 +104,7 @@ public class Koneksi {
         
             String sqlCreate = "CREATE TABLE IF NOT EXISTS penjualan "
                     + "  (id_penjualan    INT PRIMARY KEY AUTO_INCREMENT,"
-                    + "   tanggal         DATE NOT NULL,"
+                    + "   tanggal         DATE UNIQUE,"
                     + "   pemasukan       DOUBLE NOT NULL,"
                     + "   keuntungan      DOUBLE NOT NULL)";
                     
@@ -122,14 +122,16 @@ public class Koneksi {
     private static void createTablePenjualanHarian() {
         
             String sqlCreate = "CREATE TABLE IF NOT EXISTS penjualanHarian "
-                    + "  (id_detail         INT PRIMARY KEY AUTO_INCREMENT,"
+                    + "  (tanggal         DATE NOT NULL,"
+                    + "  id_detail         VARCHAR(20) NOT NULL,"
+                    + "   nama_barang       VARCHAR(20) NOT NULL,"
                     + "   tipe_barang       VARCHAR(20) NOT NULL,"
                     + "   merek_barang      VARCHAR(20) NOT NULL,"
                     + "   jumlah_barang     DOUBLE NOT NULL,"
                     + "   modal_barang      DOUBLE NOT NULL,"
                     + "   harga_jual_barang DOUBLE NOT NULL,"
-                    + "   id_penjualan      INT NOT NULL,"
-                    + "   FOREIGN KEY (id_penjualan) REFERENCES penjualan(id_penjualan))";
+                    + "   id_penjualan      INT NOT NULL)";
+                    //+ "   FOREIGN KEY (id_penjualan) REFERENCES penjualan(id_penjualan))";
                     
             
             Statement stmt;
