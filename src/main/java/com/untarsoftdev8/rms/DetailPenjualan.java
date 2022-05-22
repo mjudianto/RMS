@@ -17,15 +17,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DetailPenjualan extends javax.swing.JFrame {
      Koneksi koneksi = new Koneksi();
-     int idpenjualan;
+     public static int idpenjualan;
      private DefaultTableModel model;
     /**
      * Creates new form DetailPenjualan
      */
-    public DetailPenjualan() {
+    public DetailPenjualan(int tempId) {
         initComponents();
-        
-        DefaultTableModel model = new DefaultTableModel();
+        idpenjualan = tempId;
+        model = new DefaultTableModel();
         tabelDetailPenjualan.setModel(model);
         model.addColumn("id_detail");
         model.addColumn("nama_barang");
@@ -35,34 +35,31 @@ public class DetailPenjualan extends javax.swing.JFrame {
         model.addColumn("modal_barang");
         model.addColumn("harga_barang");
         model.addColumn("id_penjualan");
-        
-    }
-    
-    public DetailPenjualan(int tempId) {
-        idpenjualan = tempId;
-        initComponents();
         loadData();
     }
 
      public void loadData(){
+        model.getDataVector().removeAllElements();
+        
+        model.fireTableDataChanged();
         try {
             Connection c = koneksi.getKoneksi();
             PreparedStatement ps;
-            String sql = "SELECT * FROM penjualanharian where id_penjualan=? ";
+            String sql = "SELECT id_detail,nama_barang,tipe_barang,merek_barang,jumlah_barang,modal_barang,harga_jual_barang,id_penjualan FROM penjualanharian where id_penjualan=? ";
             ps=c.prepareStatement(sql);
             ps.setInt(1, idpenjualan);
             ResultSet r = ps.executeQuery();
             
             while (r.next()) {
-                Object[] o = new Object[8];
-                o [1] = r.getString("id_detail");
-                o [2] = r.getString("nama_barang");
-                o [3] = r.getString("tipe_barang");
-                o [4] = r.getString("merek_barang");
-                o [5] = r.getDouble("jumlah_barang");
-                o [6] = r.getDouble("modal_barang");
-                o [7] = r.getDouble("harga_jual_barang");
-                o [8] = r.getInt("id_penjualan");
+                Object[] o = new Object[10];
+                o [0] = r.getString("id_detail");
+                o [1] = r.getString("nama_barang");
+                o [2] = r.getString("tipe_barang");
+                o [3] = r.getString("merek_barang");
+                o [4] = r.getDouble("jumlah_barang");
+                o [5] = r.getDouble("modal_barang");
+                o [6] = r.getDouble("harga_jual_barang");
+                o [7] = r.getInt("id_penjualan");
                 
                 model.addRow(o);
             }
@@ -99,7 +96,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         tabelDetailPenjualan = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -246,7 +243,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetailPenjualan().setVisible(true);
+                new DetailPenjualan(idpenjualan).setVisible(true);
             }
         });
     }
