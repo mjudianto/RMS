@@ -6,6 +6,7 @@ package com.untarsoftdev8.rms;
 
 import java.awt.HeadlessException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,13 +52,77 @@ public class Kasir extends javax.swing.JFrame {
             pst.executeUpdate();
             pst.close();
             JOptionPane.showMessageDialog(null, "Diteruskan kePenjualan");
+            insertPenjualan(tanggal);               
             
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this, "Error" + e);
         }
     }
+    public double modalBarang(String tipebarang){
+        double modal = 0;
+        try{
+            Connection conn = Koneksi.getKoneksi();
+            String sql = "Select (harga_barang) from stok where tipe_barang='"+tipebarang+"'";
+            PreparedStatement pst = conn.prepareStatement(sql); 
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            modal = rs.getDouble(1);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+        return modal;
+    }
     
-   
+    public int getID(String tgl){
+        int idpenjualan = 0;
+        try{
+            Connection conn = Koneksi.getKoneksi();
+            String sql = "Select (id_penjualan) from penjualan where tanggal='"+tgl+"'";
+            PreparedStatement pst = conn.prepareStatement(sql); 
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            idpenjualan = rs.getInt(1);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+        return idpenjualan ;
+    }
+    
+    public void insertPenjualan(String tgl){
+        DefaultTableModel model = (DefaultTableModel) tableKasir.getModel();
+        try{
+            Connection conn = Koneksi.getKoneksi();
+            for(int i=0; i<model.getRowCount(); i++){
+                String iddetail = ID.getText();
+                String namabarang = model.getValueAt(i,1).toString();
+                String tipebarang = model.getValueAt(i,2).toString();
+                String merekbarang = model.getValueAt(i,3).toString();
+                double jumlahbarang = (double) model.getValueAt(i,5);
+                double modalbarang = modalBarang(tipebarang);
+                double hargajualbarang = (double) model.getValueAt(i,4);
+                int idpenjualan = getID(tgl);
+                
+                String sql = "INSERT INTO penjualanharian (tanggal,id_detail,nama_barang,tipe_barang,merek_barang,jumlah_barang,modal_barang,harga_jual_barang,id_penjualan) VALUES (?,?,?,?,?,?,?,?,?)";
+                PreparedStatement pst = conn.prepareStatement(sql); 
+                pst.setString(1, tgl);
+                pst.setString(2, iddetail);
+                pst.setString(3, namabarang);
+                pst.setString(4, tipebarang);
+                pst.setString(5, merekbarang);
+                pst.setDouble(6, jumlahbarang);
+                pst.setDouble(7, modalbarang);
+                pst.setDouble(8, hargajualbarang);
+                pst.setInt(9,idpenjualan);
+
+                pst.execute();
+            }
+            JOptionPane.showMessageDialog(this, "Insert Penjualanharian berhasil");
+            model.setRowCount(0);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -442,8 +507,12 @@ public class Kasir extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        getDate();
-        
+        DefaultTableModel model = (DefaultTableModel) tableKasir.getModel();
+        if(model.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this, "Anda belum menginput data");
+        }else{
+            getDate();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void TotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TotalActionPerformed
@@ -545,7 +614,7 @@ public class Kasir extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ID;
-    private com.toedter.calendar.JDateChooser Tanggal;
+    public com.toedter.calendar.JDateChooser Tanggal;
     private javax.swing.JTextField Total;
     private javax.swing.JTextField TotalUnit;
     private javax.swing.JButton buttonCariBarang;

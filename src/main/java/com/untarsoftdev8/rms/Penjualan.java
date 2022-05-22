@@ -68,16 +68,17 @@ public void getData(){
         }
 }
  
-   public void getDate(){
-       DetailPenjualan detail = new DetailPenjualan();
+   public void getDate(int idJual){
+       DetailPenjualan detail = new DetailPenjualan(idJual);
        int baris = DataPenjualan.getSelectedRow();
        String Tanggal = DataPenjualan.getValueAt(baris,1).toString();
        detail.tanggal.setText(" ~ Tanggal Penjualan : " + Tanggal + " ~ ");
-       
        detail.setVisible(true);
        detail.pack();
        dispose();
    }
+  
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -378,15 +379,16 @@ public void getData(){
                 String pilihan1[] = {"HAPUS", "BATAL"};
                 int pilih1 = JOptionPane.showOptionDialog(null, "HAPUS INI?", "KONFIRMASI", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, pilihan1, pilihan1[0]);
                 if (pilih1 == JOptionPane.YES_OPTION) {
-                    String idJual = DataPenjualan.getValueAt(baris, 0).toString();
+                   int idJual = (int) DataPenjualan.getValueAt(baris, 0);
                     try {
                 Connection c = koneksi.getKoneksi();
                 String sql = "DELETE FROM penjualan WHERE id_penjualan = ?";
                 PreparedStatement p = c.prepareStatement(sql);
-                p.setString(1, idJual);
+                p.setInt(1, idJual);
                 p.executeUpdate();
                 p.close();
                 JOptionPane.showMessageDialog(null, "Data Terhapus");
+                break;
             } catch (Exception e) {
                 System.out.println("Terjadi Kesalahan");
             }finally{
@@ -394,8 +396,8 @@ public void getData(){
             }
                 }
                 case JOptionPane.NO_OPTION://detail
-                    new DetailPenjualan().show(true);
-                     getDate();
+                    int idJual = (int) DataPenjualan.getValueAt(baris, 0);
+                    getDate(idJual);
                 break;
             }
         }else{
