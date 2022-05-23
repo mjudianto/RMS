@@ -80,7 +80,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
         getKeuntungan();
         getPemasukan();
     }
-    
+      double keuntungan;
       public void getKeuntungan(){
         try {
             Connection c = koneksi.getKoneksi();
@@ -102,7 +102,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
         }
         
     }
-      
+      double pemasukan;
       public void getPemasukan(){
         try {
             Connection c = koneksi.getKoneksi();
