@@ -71,10 +71,10 @@ public class DetailPenjualan extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("load data "+e);
         }
-        //getKeuntungan();
+        getKeuntungan();
         getPemasukan();
     }
-    
+      double keuntungan;
       public void getKeuntungan(){
         try {
             Connection c = koneksi.getKoneksi();
@@ -84,7 +84,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
             ps.setInt(1,idpenjualan);
             ResultSet r = ps.executeQuery();
             if(r.next()){
-                double keuntungan=r.getDouble("sum((harga_jual_barang - modal_barang)* jumlah_barang)");
+                keuntungan=r.getDouble("sum((harga_jual_barang - modal_barang) * jumlah_barang)");
                 Keuntungan.setText(Double.toString(keuntungan));
                 double totalkeuntungan=keuntungan;
                 System.out.println("Total keuntungan: "+keuntungan);
@@ -98,7 +98,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
         }
         
     }
-      
+      double pemasukan;
       public void getPemasukan(){
         try {
             Connection c = koneksi.getKoneksi();
@@ -108,7 +108,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
             ps.setInt(1,idpenjualan);
             ResultSet r = ps.executeQuery();
             if(r.next()){
-                double pemasukan=r.getDouble("sum(harga_jual_barang * jumlah_barang)");
+                pemasukan=r.getDouble("sum(harga_jual_barang * jumlah_barang)");
                 Pemasukan.setText(Double.toString(pemasukan));
                 System.out.println("Total pemasukan: "+pemasukan);
             }
