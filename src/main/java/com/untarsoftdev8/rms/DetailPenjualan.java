@@ -29,6 +29,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
         idpenjualan = tempId;
         model = new DefaultTableModel();
         tabelDetailPenjualan.setModel(model);
+        model.addColumn("id_harian");
         model.addColumn("id_detail");
         model.addColumn("nama_barang");
         model.addColumn("tipe_barang");
@@ -40,6 +41,10 @@ public class DetailPenjualan extends javax.swing.JFrame {
         loadData();
     }
 
+    DetailPenjualan() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
      public void loadData(){
         model.getDataVector().removeAllElements();
         
@@ -47,21 +52,22 @@ public class DetailPenjualan extends javax.swing.JFrame {
         try {
             Connection c = koneksi.getKoneksi();
             PreparedStatement ps;
-            String sql = "SELECT id_detail,nama_barang,tipe_barang,merek_barang,jumlah_barang,modal_barang,harga_jual_barang,id_penjualan FROM penjualanharian where id_penjualan=? ";
+            String sql = "SELECT id_pharian,id_detail,nama_barang,tipe_barang,merek_barang,jumlah_barang,modal_barang,harga_jual_barang,id_penjualan FROM penjualanharian where id_penjualan=? ";
             ps=c.prepareStatement(sql);
             ps.setInt(1, idpenjualan);
             ResultSet r = ps.executeQuery();
             
             while (r.next()) {
                 Object[] o = new Object[10];
-                o [0] = r.getString("id_detail");
-                o [1] = r.getString("nama_barang");
-                o [2] = r.getString("tipe_barang");
-                o [3] = r.getString("merek_barang");
-                o [4] = r.getDouble("jumlah_barang");
-                o [5] = r.getDouble("modal_barang");
-                o [6] = r.getDouble("harga_jual_barang");
-                o [7] = r.getInt("id_penjualan");
+                o [0] = r.getString("id_pharian");
+                o [1] = r.getString("id_detail");
+                o [2] = r.getString("nama_barang");
+                o [3] = r.getString("tipe_barang");
+                o [4] = r.getString("merek_barang");
+                o [5] = r.getDouble("jumlah_barang");
+                o [6] = r.getDouble("modal_barang");
+                o [7] = r.getDouble("harga_jual_barang");
+                o [8] = r.getInt("id_penjualan");
                 
                 model.addRow(o);
             }
@@ -71,7 +77,7 @@ public class DetailPenjualan extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("load data "+e);
         }
-        //getKeuntungan();
+        getKeuntungan();
         getPemasukan();
     }
     
@@ -84,10 +90,8 @@ public class DetailPenjualan extends javax.swing.JFrame {
             ps.setInt(1,idpenjualan);
             ResultSet r = ps.executeQuery();
             if(r.next()){
-                double keuntungan=r.getDouble("sum((harga_jual_barang - modal_barang)* jumlah_barang)");
-                Keuntungan.setText(Double.toString(keuntungan));
-                double totalkeuntungan=keuntungan;
-                System.out.println("Total keuntungan: "+keuntungan);
+                totalkeuntungan=r.getDouble("sum((harga_jual_barang - modal_barang) * jumlah_barang)");
+                Keuntungan.setText(Double.toString(totalkeuntungan));
             }
             else{
                 totalkeuntungan=0.0;
@@ -108,9 +112,8 @@ public class DetailPenjualan extends javax.swing.JFrame {
             ps.setInt(1,idpenjualan);
             ResultSet r = ps.executeQuery();
             if(r.next()){
-                double pemasukan=r.getDouble("sum(harga_jual_barang * jumlah_barang)");
-                Pemasukan.setText(Double.toString(pemasukan));
-                System.out.println("Total pemasukan: "+pemasukan);
+                totalpemasukan=r.getDouble("sum(harga_jual_barang * jumlah_barang)");
+                Pemasukan.setText(Double.toString(totalpemasukan));
             }
             else{
                 totalpemasukan=0.0;
@@ -121,6 +124,8 @@ public class DetailPenjualan extends javax.swing.JFrame {
         }
         
     }
+      
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -145,8 +150,6 @@ public class DetailPenjualan extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         tabelDetailPenjualan = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        btnKembali = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -267,44 +270,15 @@ public class DetailPenjualan extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnKembali.setText("Kembali");
-        btnKembali.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKembaliActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("jButton1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(353, 353, 353)
-                    .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(354, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(363, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(216, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(264, 264, 264)
-                    .addComponent(btnKembali)
-                    .addContainerGap(264, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(264, Short.MAX_VALUE)
-                    .addComponent(jButton1)
-                    .addContainerGap(264, Short.MAX_VALUE)))
         );
 
         pack();
@@ -312,32 +286,58 @@ public class DetailPenjualan extends javax.swing.JFrame {
 
     private void tabelDetailPenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelDetailPenjualanMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showConfirmDialog(null,"Apakah anda yakin ingin menghapus??","KONFIRMASI",JOptionPane.YES_NO_OPTION);
+       int i = tabelDetailPenjualan.getSelectedRow();
+        if (i == -1) {
+            return;
+        }
+        
+        int id = (int) model.getValueAt(i, 0);
+        int pernyataan = JOptionPane.showConfirmDialog(null, "Yakin Data Akan Dihapus","Konfirmasi", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (pernyataan== JOptionPane.OK_OPTION) {
+            try {
+                Connection c = koneksi.getKoneksi();
+                String sql = "DELETE FROM penjualanharian WHERE id_pharian = ?";
+                PreparedStatement p = c.prepareStatement(sql);
+                p.setInt(1, id);
+                p.executeUpdate();
+                p.close();
+                getKeuntungan();
+                getPemasukan();
+                JOptionPane.showMessageDialog(null, "Data Terhapus");
+            } catch (Exception e) {
+                System.out.println("Terjadi Kesalahan"+e);
+            }finally{
+                loadData();
+            }
+        }
+        if (pernyataan == JOptionPane.CANCEL_OPTION) {
+            
+        }
     }//GEN-LAST:event_tabelDetailPenjualanMouseClicked
 
-    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
         this.setVisible(false);
         getKeuntungan();
         getPemasukan();
         try {
             Connection c = koneksi.getKoneksi();
-            String sql = "UPDATE penjualan SET pemasukan=? WHERE id_penjualan = ?;";
+            String sql = "UPDATE penjualan SET keuntungan=?,pemasukan=? WHERE id_penjualan = ?";
             PreparedStatement p = c.prepareStatement(sql);
             p=c.prepareStatement(sql);
-            System.out.println("total pemasukan: "+ totalpemasukan);
-            p.setDouble(1, totalpemasukan);
-            p.setInt(2, idpenjualan);
+            System.out.println("total keuntungan: "+ totalkeuntungan);
+            p.setDouble(1, totalkeuntungan);
+            p.setDouble(2,totalpemasukan);
+            p.setInt(3, idpenjualan);
             p.executeUpdate();
             p.close();
         } catch (Exception e) {
             System.out.println("btn kembali "+e);
         }finally{
             new Penjualan().setVisible(true);
-        }  
-    }//GEN-LAST:event_btnKembaliActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        }                  
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -376,10 +376,8 @@ public class DetailPenjualan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextPane Keuntungan;
-    private javax.swing.JTextPane Pemasukan;
-    private javax.swing.JButton btnKembali;
-    private javax.swing.JButton jButton1;
+    public static javax.swing.JTextPane Keuntungan;
+    public static javax.swing.JTextPane Pemasukan;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

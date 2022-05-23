@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import static javax.management.Query.gt;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -37,6 +38,7 @@ public class Penjualan extends javax.swing.JFrame {
         
         DataPenjualan.setModel(model);
         getData();
+        getTotalUtang();
     }
 
 public void getData(){
@@ -79,6 +81,23 @@ public void getData(){
        dispose();
    }
   
+   public void getTotalUtang(){
+        try {
+            Connection c = koneksi.getKoneksi();
+            PreparedStatement ps;
+            String sql = " SELECT sum(keuntungan) FROM penjualan";
+            ps=c.prepareStatement(sql);
+            ResultSet r = ps.executeQuery();
+            if(r.next()){
+                double sum=r.getDouble("sum(keuntungan)");
+                String tempsum = String.valueOf(sum);
+                TotalKeuntungan.setText(tempsum);
+                System.out.println("Total Keuntungan: "+tempsum);
+            }
+        } catch (Exception e) {
+            System.out.println("kesalahan Keuntungan: "+e);
+        }
+    }
   
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,7 +118,7 @@ public void getData(){
         DataPenjualan = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
+        TotalKeuntungan = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -168,8 +187,8 @@ public void getData(){
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Total Keuntungan :");
 
-        jTextPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jScrollPane3.setViewportView(jTextPane2);
+        TotalKeuntungan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jScrollPane3.setViewportView(TotalKeuntungan);
 
         jButton1.setBackground(new java.awt.Color(153, 153, 153));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -485,6 +504,7 @@ public void getData(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTable DataPenjualan;
+    private javax.swing.JTextPane TotalKeuntungan;
     private javax.swing.JButton buttonCariBarang;
     private javax.swing.JButton buttonHome;
     private javax.swing.JButton buttonKasir;
@@ -503,7 +523,6 @@ public void getData(){
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextPane jTextPane2;
     private com.toedter.calendar.JDateChooser txTanggal;
     // End of variables declaration//GEN-END:variables
 }
