@@ -122,7 +122,8 @@ public class Koneksi {
     private static void createTablePenjualanHarian() {
         
             String sqlCreate = "CREATE TABLE IF NOT EXISTS penjualanHarian "
-                    + "  (tanggal         DATE NOT NULL,"
+                    + "  (id_pharian         INT PRIMARY KEY AUTO_INCREMENT,"
+                    + "   tanggal         DATE NOT NULL,"
                     + "  id_detail         VARCHAR(20) NOT NULL,"
                     + "   nama_barang       VARCHAR(20) NOT NULL,"
                     + "   tipe_barang       VARCHAR(20) NOT NULL,"

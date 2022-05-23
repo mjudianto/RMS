@@ -54,7 +54,7 @@ public void getData(){
             
             while (r.next()) {
                 Object[] o = new Object[7];
-                o [0] = r.getString("id_penjualan");
+                o [0] = r.getInt("id_penjualan");
                 o [1] = r.getString("tanggal");
                 o [2] = r.getString("pemasukan");
                 o [3] = r.getString("keuntungan");
@@ -73,6 +73,7 @@ public void getData(){
        int baris = DataPenjualan.getSelectedRow();
        String Tanggal = DataPenjualan.getValueAt(baris,1).toString();
        detail.tanggal.setText(" ~ Tanggal Penjualan : " + Tanggal + " ~ ");
+       detail.idpenjualan=idJual;
        detail.setVisible(true);
        detail.pack();
        dispose();
@@ -388,13 +389,15 @@ public void getData(){
                 p.executeUpdate();
                 p.close();
                 JOptionPane.showMessageDialog(null, "Data Terhapus");
-                break;
+                
             } catch (Exception e) {
                 System.out.println("Terjadi Kesalahan");
             }finally{
                 getData();
             }
-                }
+            break;
+            }
+                
                 case JOptionPane.NO_OPTION://detail
                     int idJual = (int) DataPenjualan.getValueAt(baris, 0);
                     getDate(idJual);

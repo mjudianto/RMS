@@ -250,8 +250,8 @@ public class DetailSupplierPembelian extends javax.swing.JFrame {
     }
     
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
-        this.setVisible(false);
-        getTotal();
+           this.setVisible(false);
+            getTotal();
         try {
             Connection c = koneksi.getKoneksi();
             String sql = "UPDATE pembelian SET total=? WHERE id_pembelian = ?;";
