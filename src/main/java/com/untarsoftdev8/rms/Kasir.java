@@ -38,12 +38,12 @@ public class Kasir extends javax.swing.JFrame {
     }
     
     public void getDate(){
-        Penjualan penjualan = new Penjualan();
+        //Penjualan penjualan = new Penjualan();
         String tampilan = "yyyy-MM-dd";
         SimpleDateFormat fm = new SimpleDateFormat(tampilan);
         String tanggal = String.valueOf(fm.format(Tanggal.getDate()));
         try {
-            String sql = "INSERT INTO penjualan (tanggal,pemasukan,keuntungan) VALUES (?, ?,?)";
+            String sql = "INSERT IGNORE INTO penjualan (tanggal,pemasukan,keuntungan) VALUES (?, ?,?)";
             Connection conn = Koneksi.getKoneksi();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1,tanggal);
@@ -87,10 +87,48 @@ public class Kasir extends javax.swing.JFrame {
         }
         return idpenjualan ;
     }
-    
+    public int getStok(int tempid){
+        int totstok = 0;
+        try {
+            Connection c = Koneksi.getKoneksi();
+            String sql = "SELECT stok_barang FROM stok WHERE id_barang=?;";
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1, tempid);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                totstok=r.getInt("stok_barang");
+            }
+            System.out.println("stok barang: "+totstok);
+            r.close();
+            p.close();
+        } catch (Exception e) {
+            System.out.println("getstok: "+e);
+        }
+        return totstok;
+    }
+    public int getIDBarang(String nama_barang){
+        int tempid = 0;
+        try {
+            Connection c = Koneksi.getKoneksi();
+            String sql = "SELECT id_barang FROM stok WHERE nama_barang=?;";
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setString(1, nama_barang);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                tempid=r.getInt("id_barang");
+            }
+            System.out.println("id barang: "+tempid);
+            r.close();
+            p.close();
+        } catch (Exception e) {
+            System.out.println("getstok: "+e);
+        }
+        return tempid;
+    }
     public void insertPenjualan(String tgl){
         DefaultTableModel model = (DefaultTableModel) tableKasir.getModel();
         try{
+            boolean isBerhasil=false;
             Connection conn = Koneksi.getKoneksi();
             for(int i=0; i<model.getRowCount(); i++){
                 String iddetail = ID.getText();
@@ -101,27 +139,38 @@ public class Kasir extends javax.swing.JFrame {
                 double modalbarang = modalBarang(tipebarang);
                 double hargajualbarang = (double) model.getValueAt(i,4);
                 int idpenjualan = getID(tgl);
-                
-                String sql = "INSERT INTO penjualanharian (tanggal,id_detail,nama_barang,tipe_barang,merek_barang,jumlah_barang,modal_barang,harga_jual_barang,id_penjualan) VALUES (?,?,?,?,?,?,?,?,?)";
-                PreparedStatement pst = conn.prepareStatement(sql); 
-                pst.setString(1, tgl);
-                pst.setString(2, iddetail);
-                pst.setString(3, namabarang);
-                pst.setString(4, tipebarang);
-                pst.setString(5, merekbarang);
-                pst.setDouble(6, jumlahbarang);
-                pst.setDouble(7, modalbarang);
-                pst.setDouble(8, hargajualbarang);
-                pst.setInt(9,idpenjualan);
-
-                pst.execute();
+                int idbarang=getIDBarang(namabarang);
+                int stokbarang=getStok(idbarang);
+                if(jumlahbarang>stokbarang){
+                    isBerhasil=false;
+                    JOptionPane.showMessageDialog(this, "Jumlah barang melebihi stok");
+                    
+                }
+                else{
+                    isBerhasil=true;
+                    String sql = "INSERT INTO penjualanharian (tanggal,id_detail,nama_barang,tipe_barang,merek_barang,jumlah_barang,modal_barang,harga_jual_barang,id_penjualan) VALUES (?,?,?,?,?,?,?,?,?)";
+                    PreparedStatement pst = conn.prepareStatement(sql); 
+                    pst.setString(1, tgl);
+                    pst.setString(2, iddetail);
+                    pst.setString(3, namabarang);
+                    pst.setString(4, tipebarang);
+                    pst.setString(5, merekbarang);
+                    pst.setDouble(6, jumlahbarang);
+                    pst.setDouble(7, modalbarang);
+                    pst.setDouble(8, hargajualbarang);
+                    pst.setInt(9,idpenjualan);
+                    
+                    pst.execute();
+                    JOptionPane.showMessageDialog(this, "Insert Penjualanharian berhasil");
+                }  
             }
-            JOptionPane.showMessageDialog(this, "Insert Penjualanharian berhasil");
-            model.setRowCount(0);
+            if(isBerhasil=true){
+                model.setRowCount(0);
+            }
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
-        
     }
     /**
      * This method is called from within the constructor to initialize the form.
