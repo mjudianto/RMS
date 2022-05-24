@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -69,6 +71,36 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
             System.out.println("load data "+e);
         }
     }
+    
+    private void findData(String key){
+        try{
+            Object[] judul_kolom = {"id_harian","id_detail","nama_barang","tipe_barang","merek_barang","jumlah_barang","modal_barang","harga_jual_barang","id_penjualan"};
+            model = new DefaultTableModel(null,judul_kolom);
+            TabelCariDataPenjualan.setModel(model);
+            
+            Connection c = koneksi.getKoneksi();
+            Statement s=c.createStatement();
+            model.getDataVector().removeAllElements();
+            
+            ResultSet rs =s.executeQuery("Select * from penjualanharian where id_detail LIKE '%"+key+"%'");
+            while(rs.next()){
+                Object[] data={
+                rs.getString("id_pharian"),
+                rs.getString("id_detail"),
+                rs.getString("nama_barang"),
+                rs.getString("tipe_barang"),
+                rs.getString("merek_barang"),
+                rs.getString("jumlah_barang"),
+                rs.getString("modal_barang"),
+                rs.getString("harga_jual_barang"),
+                rs.getString("id_penjualan"),
+                };
+                model.addRow(data);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,7 +123,7 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelCariDataPenjualan = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        caribarangpenjualan = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -228,6 +260,17 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(TabelCariDataPenjualan);
 
+        caribarangpenjualan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                caribarangpenjualanActionPerformed(evt);
+            }
+        });
+        caribarangpenjualan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                caribarangpenjualanKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,7 +289,7 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1))))
+                                .addComponent(caribarangpenjualan))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -261,7 +304,7 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(caribarangpenjualan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -300,6 +343,21 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
         this.setVisible(false);
         new CariBarangPenjualan().setVisible(true);
     }//GEN-LAST:event_buttonCariBarangActionPerformed
+
+    private void caribarangpenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribarangpenjualanActionPerformed
+        
+    }//GEN-LAST:event_caribarangpenjualanActionPerformed
+
+    private void caribarangpenjualanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_caribarangpenjualanKeyReleased
+       String key=caribarangpenjualan.getText();
+        System.out.println(key);
+        
+        if(key!=""){
+            findData(key);
+        }else{
+            loadData();
+        }
+    }//GEN-LAST:event_caribarangpenjualanKeyReleased
 
     /**
      * @param args the command line arguments
@@ -344,12 +402,12 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
     private javax.swing.JButton buttonPenjualan;
     private javax.swing.JButton buttonStok;
     private javax.swing.JButton buttonSupplier;
+    private javax.swing.JTextField caribarangpenjualan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
