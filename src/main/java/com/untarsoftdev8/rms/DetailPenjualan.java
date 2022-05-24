@@ -291,14 +291,14 @@ public class DetailPenjualan extends javax.swing.JFrame {
             return;
         }
         
-        int id = (int) model.getValueAt(i, 0);
+        String id = model.getValueAt(i, 0).toString();
         int pernyataan = JOptionPane.showConfirmDialog(null, "Yakin Data Akan Dihapus","Konfirmasi", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (pernyataan== JOptionPane.OK_OPTION) {
             try {
                 Connection c = koneksi.getKoneksi();
                 String sql = "DELETE FROM penjualanharian WHERE id_pharian = ?";
                 PreparedStatement p = c.prepareStatement(sql);
-                p.setInt(1, id);
+                p.setString(1, id);
                 p.executeUpdate();
                 p.close();
                 getKeuntungan();
