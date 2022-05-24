@@ -148,8 +148,14 @@ public class Kasir extends javax.swing.JFrame {
                 }
                 else{
                     isBerhasil=true;
+                    double tempstok = stokbarang-jumlahbarang;
+                    String sql1 = "UPDATE stok SET stok_barang=? where id_barang=?";
+                    PreparedStatement pst = conn.prepareStatement(sql1); 
+                    pst.setDouble(1,tempstok);
+                    pst.setInt(2,idbarang);
+                    pst.execute();
                     String sql = "INSERT INTO penjualanharian (tanggal,id_detail,nama_barang,tipe_barang,merek_barang,jumlah_barang,modal_barang,harga_jual_barang,id_penjualan) VALUES (?,?,?,?,?,?,?,?,?)";
-                    PreparedStatement pst = conn.prepareStatement(sql); 
+                    pst = conn.prepareStatement(sql); 
                     pst.setString(1, tgl);
                     pst.setString(2, iddetail);
                     pst.setString(3, namabarang);
