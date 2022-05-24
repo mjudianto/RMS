@@ -170,6 +170,32 @@ public class SupplierPembelian extends javax.swing.JFrame {
             System.out.println("kesalahan gettotalutang: "+e);
         }
     }
+    
+    private void findData(String key){
+        try{
+            Object[] judul_kolom = {"id_pembelian","tanggal","total","lunas","nama_supplier"};
+            model = new DefaultTableModel(null,judul_kolom);
+            pembelianTable.setModel(model);
+            
+            Connection c = koneksi.getKoneksi();
+            Statement s=c.createStatement();
+            model.getDataVector().removeAllElements();
+            
+            ResultSet rs =s.executeQuery("Select * from pembelian where tanggal LIKE '%"+key+"%'");
+            while(rs.next()){
+                Object[] data={
+                rs.getString("id_pembelian"),
+                rs.getString("tanggal"),
+                rs.getString("total"),
+                rs.getString("lunas"),
+                rs.getString("nama_supplier"),
+                };
+                model.addRow(data);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -181,7 +207,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
         pembelianTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tabelCari = new javax.swing.JTextField();
         TotalUtang = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -253,6 +279,12 @@ public class SupplierPembelian extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Total Utang :");
+
+        tabelCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelCariKeyReleased(evt);
+            }
+        });
 
         TotalUtang.setEditable(false);
 
@@ -345,7 +377,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tabelCari, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -396,7 +428,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tabelCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TotalUtang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(60, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -490,7 +522,7 @@ public class SupplierPembelian extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -685,6 +717,18 @@ public class SupplierPembelian extends javax.swing.JFrame {
             saveTotal();
         }
     }//GEN-LAST:event_btnInputActionPerformed
+
+    private void tabelCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelCariKeyReleased
+        // TODO add your handling code here:
+        String key=tabelCari.getText();
+        System.out.println(key);
+        
+        if(key!=""){
+            findData(key);
+        }else{
+            loadData();
+        }
+    }//GEN-LAST:event_tabelCariKeyReleased
     
     
     
@@ -723,9 +767,9 @@ public class SupplierPembelian extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable pembelianTable;
     private javax.swing.JComboBox<String> pilBos;
+    private javax.swing.JTextField tabelCari;
     private javax.swing.JTextField txtID;
     private com.toedter.calendar.JDateChooser txtTanggal;
     // End of variables declaration//GEN-END:variables
