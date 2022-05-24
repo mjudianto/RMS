@@ -5,6 +5,8 @@
  */
 package com.untarsoftdev8.rms;
 
+import javax.swing.WindowConstants;
+
 /**
  *
  * @author Jmslord
@@ -29,7 +31,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnkeuntungan = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -55,10 +57,10 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setText("Grafik Keuntungan");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnkeuntungan.setText("Grafik Keuntungan");
+        btnkeuntungan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnkeuntunganActionPerformed(evt);
             }
         });
 
@@ -81,7 +83,7 @@ public class Home extends javax.swing.JFrame {
                         .addGap(51, 51, 51)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(81, 81, 81)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnkeuntungan, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -95,7 +97,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnkeuntungan, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,9 +231,13 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void btnkeuntunganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnkeuntunganActionPerformed
+        LineChart line = new LineChart("Grafik Keuntungan");
+        line.pack();  
+        line.setSize(400, 350);  
+        line.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+        line.setVisible(true);  
+    }//GEN-LAST:event_btnkeuntunganActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -306,6 +312,7 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnkeuntungan;
     private javax.swing.JButton buttonCariBarang;
     private javax.swing.JButton buttonHome;
     private javax.swing.JButton buttonKasir;
@@ -313,7 +320,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton buttonStok;
     private javax.swing.JButton buttonSupplier;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
