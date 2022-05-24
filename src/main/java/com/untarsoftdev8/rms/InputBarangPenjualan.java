@@ -115,7 +115,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         loadData();
     }
 
-    public void showData(){
+   /* public void showData(){
     
     
     tb.addColumn("ID");
@@ -148,7 +148,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-}
+}*/
     
     private void findData(String key){
         try{
@@ -285,7 +285,7 @@ public class InputBarangPenjualan extends javax.swing.JFrame {
         if(key!=""){
             findData(key);
         }else{
-            showData();
+            loadData();
         }
     }//GEN-LAST:event_cariBarangKeyReleased
         
