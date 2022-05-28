@@ -13,6 +13,9 @@ import javax.swing.WindowConstants;
  */
 
 public class Home extends javax.swing.JFrame {
+    
+    Login login = new Login();
+    
     /**
      * Creates new form Home pertama
      */
@@ -244,35 +247,46 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
-        this.setVisible(false);
-        new Home().setVisible(true);
+        if ("owner".equals(login.userstatus)){
+            this.setVisible(false);
+            new Home().setVisible(true);
+        }
     }//GEN-LAST:event_buttonHomeActionPerformed
 
     private void buttonKasirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKasirActionPerformed
-
-        this.setVisible(false);
-        new Kasir().setVisible(true);
+        
+        if (!"admin".equals(login.userstatus)){
+            this.setVisible(false);
+            new Kasir().setVisible(true);
+        }
     }//GEN-LAST:event_buttonKasirActionPerformed
 
     private void buttonPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPenjualanActionPerformed
-
-         this.setVisible(false);
-         new Penjualan().setVisible(true);
+        if("owner".equals(login.userstatus)){
+            this.setVisible(false);
+            new Penjualan().setVisible(true);
+        }
     }//GEN-LAST:event_buttonPenjualanActionPerformed
 
     private void buttonStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStokActionPerformed
-        this.setVisible(false);
-        new Stok().setVisible(true);
+        if (!"kasir".equals(login.userstatus)){
+            this.setVisible(false);
+            new Stok().setVisible(true);
+        }
     }//GEN-LAST:event_buttonStokActionPerformed
 
     private void buttonSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupplierActionPerformed
-        this.setVisible(false);
-        new Supplier().setVisible(true);
+        if (!"kasir".equals(login.userstatus)){
+            this.setVisible(false);
+            new Supplier().setVisible(true);
+        }
     }//GEN-LAST:event_buttonSupplierActionPerformed
 
     private void buttonCariBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariBarangActionPerformed
-        this.setVisible(false);
-        new CariBarangPenjualan().setVisible(true);
+        if (!"admin".equals(login.userstatus)){
+            this.setVisible(false);
+            new CariBarangPenjualan().setVisible(true);
+        }
     }//GEN-LAST:event_buttonCariBarangActionPerformed
 
     /**

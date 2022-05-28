@@ -17,7 +17,7 @@ public class Login extends javax.swing.JFrame {
     
     PreparedStatement statuspath = null;
      ResultSet resultstatus = null;
-     String userstatus;
+     public String userstatus = "admin";
     
     /**
      * Creates new form Login

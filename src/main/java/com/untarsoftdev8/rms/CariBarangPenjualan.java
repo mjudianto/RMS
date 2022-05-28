@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
  * @author Asus ROG
  */
 public class CariBarangPenjualan extends javax.swing.JFrame {
+    
+    Login login = new Login();
     Koneksi koneksi = new Koneksi();
     private DefaultTableModel model;
     /**
@@ -32,7 +34,6 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
         model.addColumn("tipe_barang");
         model.addColumn("merek_barang");
         model.addColumn("jumlah_barang");
-        model.addColumn("modal_barang");
         model.addColumn("harga_barang");
         model.addColumn("id_penjualan");
         loadData();
@@ -58,7 +59,6 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
                 o [3] = r.getString("tipe_barang");
                 o [4] = r.getString("merek_barang");
                 o [5] = r.getDouble("jumlah_barang");
-                o [6] = r.getDouble("modal_barang");
                 o [7] = r.getDouble("harga_jual_barang");
                 o [8] = r.getInt("id_penjualan");
                 
@@ -91,7 +91,6 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
                 rs.getString("tipe_barang"),
                 rs.getString("merek_barang"),
                 rs.getString("jumlah_barang"),
-                rs.getString("modal_barang"),
                 rs.getString("harga_jual_barang"),
                 rs.getString("id_penjualan"),
                 };
@@ -314,34 +313,45 @@ public class CariBarangPenjualan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
-        this.setVisible(false);
-        new Home().setVisible(true);
+        if ("owner".equals(login.userstatus)){
+            this.setVisible(false);
+            new Home().setVisible(true);
+        }
     }//GEN-LAST:event_buttonHomeActionPerformed
 
     private void buttonKasirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKasirActionPerformed
-        this.setVisible(false);
-        new Kasir().setVisible(true);
+        if (!"admin".equals(login.userstatus)){
+            this.setVisible(false);
+            new Kasir().setVisible(true);
+        }
     }//GEN-LAST:event_buttonKasirActionPerformed
 
     private void buttonPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPenjualanActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        new Penjualan().setVisible(true);
+        if("owner".equals(login.userstatus)){
+            this.setVisible(false);
+            new Penjualan().setVisible(true);
+        }
     }//GEN-LAST:event_buttonPenjualanActionPerformed
 
     private void buttonStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStokActionPerformed
-        this.setVisible(false);
-        new Stok().setVisible(true);
+        if (!"kasir".equals(login.userstatus)){
+            this.setVisible(false);
+            new Stok().setVisible(true);
+        }
     }//GEN-LAST:event_buttonStokActionPerformed
 
     private void buttonSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupplierActionPerformed
-        this.setVisible(false);
-        new Supplier().setVisible(true);
+        if (!"kasir".equals(login.userstatus)){
+            this.setVisible(false);
+            new Supplier().setVisible(true);
+        }
     }//GEN-LAST:event_buttonSupplierActionPerformed
 
     private void buttonCariBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariBarangActionPerformed
-        this.setVisible(false);
-        new CariBarangPenjualan().setVisible(true);
+        if (!"admin".equals(login.userstatus)){
+            this.setVisible(false);
+            new CariBarangPenjualan().setVisible(true);
+        }
     }//GEN-LAST:event_buttonCariBarangActionPerformed
 
     private void caribarangpenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribarangpenjualanActionPerformed
