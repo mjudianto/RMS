@@ -11,15 +11,15 @@ import javax.swing.WindowConstants;
  *
  * @author Jmslord
  */
-public class Home extends javax.swing.JFrame {
 
+public class Home extends javax.swing.JFrame {
     /**
      * Creates new form Home pertama
      */
     public Home() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -249,14 +249,15 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonHomeActionPerformed
 
     private void buttonKasirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKasirActionPerformed
+
         this.setVisible(false);
         new Kasir().setVisible(true);
     }//GEN-LAST:event_buttonKasirActionPerformed
 
     private void buttonPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPenjualanActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        new Penjualan().setVisible(true);
+
+         this.setVisible(false);
+         new Penjualan().setVisible(true);
     }//GEN-LAST:event_buttonPenjualanActionPerformed
 
     private void buttonStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStokActionPerformed

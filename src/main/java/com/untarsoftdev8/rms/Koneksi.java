@@ -36,6 +36,24 @@ public class Koneksi {
         }
         return koneksi;
     }
+     private static void createTableUser() {
+            
+            String sqlCreate = "CREATE TABLE IF NOT EXISTS user "
+                    + "  (id_user           INT PRIMARY KEY AUTO_INCREMENT,"
+                    + "   username         VARCHAR(20) NOT NULL,"
+                    + "   password          VARCHAR(12) NOT NULL,"
+                    + "   status                 VARCHAR(20) NOT NULL)";
+            
+            Statement stmt;
+        try {
+            stmt = koneksi.createStatement();
+            stmt.execute(sqlCreate);
+            System.out.println("tabel user Berhasil atau sudah ada");
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+     
     private static void createTableSupplier() {
             
             String sqlCreate = "CREATE TABLE IF NOT EXISTS supplier "
@@ -199,6 +217,7 @@ public class Koneksi {
         createTablePembelian();
         createTableDetailPembelian();
         createTablePenjualanHarian();
+        createTableUser();
         //alterSupplier();
         //deleteTable("detailpembelian");
     }

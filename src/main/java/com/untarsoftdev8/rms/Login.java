@@ -14,6 +14,11 @@ public class Login extends javax.swing.JFrame {
     Connection conn = Koneksi.getKoneksi();
     ResultSet rs  = null;
     PreparedStatement pat = null;
+    
+    PreparedStatement statuspath = null;
+     ResultSet resultstatus = null;
+     String userstatus;
+    
     /**
      * Creates new form Login
      */
@@ -205,16 +210,33 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         String sql = "select * from login where username=? and password=?";
+         String sql = "select * from user where username=? and password=?";
+         String status = "select status from user where username=? and password=?";
          try{
              pat = conn.prepareStatement(sql);
              pat.setString(1, txUsername.getText());
              pat.setString(2, String.valueOf(txPassword.getPassword()));
              rs = pat.executeQuery();
+             
              if(rs.next()){
+                statuspath = conn.prepareStatement(status);
+                statuspath.setString(1, txUsername.getText());
+                statuspath.setString(2, String.valueOf(txPassword.getPassword()));
+                resultstatus = statuspath.executeQuery();
+                
+                while (resultstatus.next()){
+                    userstatus = resultstatus.getString("status");
+                }
+                
                  JOptionPane.showMessageDialog(null, "Success Koneksi");
                  this.setVisible(false);
-                 new Home().setVisible(true);
+                 if ("kasir".equals(userstatus)){
+                     new Kasir().setVisible(true);
+                 } if ("owner".equals(userstatus)){
+                     new Home().setVisible(true);
+                 } if ("admin".equals(userstatus)){
+                     new Stok().setVisible(true);
+                 }
              }else
                   JOptionPane.showMessageDialog(null, "Not Koneksi");
          }catch (Exception e){

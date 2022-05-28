@@ -520,35 +520,35 @@ public class Kasir extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHomeActionPerformed
-        this.setVisible(false);
-        new Home().setVisible(true);
+//        this.setVisible(false);
+//        new Home().setVisible(true);
     }//GEN-LAST:event_buttonHomeActionPerformed
 
     private void buttonKasirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKasirActionPerformed
-        this.setVisible(false);
-        Kasir kasir = new Kasir();
-        kasir.setVisible(true);
+//        this.setVisible(false);
+//        Kasir kasir = new Kasir();
+//        kasir.setVisible(true);
     }//GEN-LAST:event_buttonKasirActionPerformed
 
     private void buttonPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPenjualanActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        new Penjualan().setVisible(true);
+//        this.setVisible(false);
+//        new Penjualan().setVisible(true);
     }//GEN-LAST:event_buttonPenjualanActionPerformed
 
     private void buttonStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStokActionPerformed
-        this.setVisible(false);
-        new Stok().setVisible(true);
+//        this.setVisible(false);
+//        new Stok().setVisible(true);
     }//GEN-LAST:event_buttonStokActionPerformed
 
     private void buttonSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupplierActionPerformed
-        this.setVisible(false);
-        new Supplier().setVisible(true);
+//        this.setVisible(false);
+//        new Supplier().setVisible(true);
     }//GEN-LAST:event_buttonSupplierActionPerformed
 
     private void buttonCariBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariBarangActionPerformed
-        this.setVisible(false);
-        new CariBarangPenjualan().setVisible(true);
+//        this.setVisible(false);
+//        new CariBarangPenjualan().setVisible(true);
     }//GEN-LAST:event_buttonCariBarangActionPerformed
 
     private void IDjTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDjTextField1ActionPerformed
