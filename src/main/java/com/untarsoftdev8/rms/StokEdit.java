@@ -34,7 +34,7 @@ public class StokEdit extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Poppins ExtraBold", 1, 24)); // NOI18N
         jLabel12.setText("Panel Edit");
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -56,7 +56,7 @@ public class StokEdit extends javax.swing.JFrame {
         jTable2.setRowHeight(25);
         jScrollPane2.setViewportView(jTable2);
 
-        buttonCancel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        buttonCancel.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         buttonCancel.setText("Cancel");
         buttonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,7 +64,7 @@ public class StokEdit extends javax.swing.JFrame {
             }
         });
 
-        buttonfinish.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        buttonfinish.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         buttonfinish.setText("Finish");
         buttonfinish.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,7 +99,7 @@ public class StokEdit extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonfinish)
                     .addComponent(buttonCancel))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
