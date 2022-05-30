@@ -4,3 +4,6 @@ Mathew
 Venny
 Dameethia
 Valentino
+
+
+Push dgn nama Lenovo = Dameethia
