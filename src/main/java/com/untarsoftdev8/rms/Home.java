@@ -91,7 +91,7 @@ public class Home extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Lenovo\\Documents\\NetBeansProjects\\RMS\\src\\main\\java\\com\\untarsoftdev8\\rms\\RMS (2).png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jmslord\\Documents\\NetBeansProjects\\RMS\\src\\main\\java\\com\\untarsoftdev8\\rms\\RMS (2).png")); // NOI18N
         jLabel1.setText("RMS");
 
         buttonHome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -193,7 +193,7 @@ public class Home extends javax.swing.JFrame {
         LineChart line = new LineChart("Grafik Keuntungan");
         line.pack();  
         line.setSize(400, 350);  
-        line.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+        line.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);  
         line.setVisible(true);  
     }//GEN-LAST:event_btnkeuntunganActionPerformed
 

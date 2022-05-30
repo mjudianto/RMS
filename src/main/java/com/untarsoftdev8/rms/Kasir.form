@@ -70,7 +70,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jPanel10" max="32767" attributes="0"/>
-          <Component id="jPanel1" pref="557" max="32767" attributes="0"/>
+          <Component id="jPanel1" pref="563" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -218,9 +218,6 @@
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Lenovo\Documents\NetBeansProjects\RMS\src\main\java\com\untarsoftdev8\rms\RMS (2).png"/>
             </Property>
           </Properties>
         </Component>

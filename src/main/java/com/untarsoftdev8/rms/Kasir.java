@@ -4,7 +4,15 @@
  */
 package com.untarsoftdev8.rms;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.HeadlessException;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import static java.awt.print.Printable.NO_SUCH_PAGE;
+import static java.awt.print.Printable.PAGE_EXISTS;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -292,7 +302,6 @@ public class Kasir extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Lenovo\\Documents\\NetBeansProjects\\RMS\\src\\main\\java\\com\\untarsoftdev8\\rms\\RMS (2).png")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -502,7 +511,7 @@ public class Kasir extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
         );
 
         pack();
@@ -565,7 +574,30 @@ public class Kasir extends javax.swing.JFrame {
         if(model.getRowCount() == 0){
             JOptionPane.showMessageDialog(this, "Anda belum menginput data");
         }else{
+            PrinterJob job = PrinterJob.getPrinterJob();
+            job.setJobName("Print Data");
+            job.setPrintable(new Printable(){
+                public int print(Graphics g, PageFormat pf, int page)throws PrinterException {
+                    if (page > 0) {
+                        return NO_SUCH_PAGE;
+                    }
+                    Graphics2D g2d = (Graphics2D)g;
+                    g2d.translate(pf.getImageableX(), pf.getImageableY());
+                    g2d.scale(1,1);
+                    jPanel10.paint(g2d);
+                    return PAGE_EXISTS;
+                }
+            });
+            boolean ok = job.printDialog();
+            if(ok){
+                try {
+                    job.print();
+                } catch (PrinterException ex) {
+                    Logger.getLogger(Kasir.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             getDate();
+            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

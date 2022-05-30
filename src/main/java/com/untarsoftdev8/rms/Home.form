@@ -156,7 +156,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Lenovo\Documents\NetBeansProjects\RMS\src\main\java\com\untarsoftdev8\rms\RMS (2).png"/>
+              <Image iconType="2" name="C:\Users\Jmslord\Documents\NetBeansProjects\RMS\src\main\java\com\untarsoftdev8\rms\RMS (2).png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="RMS"/>
           </Properties>
